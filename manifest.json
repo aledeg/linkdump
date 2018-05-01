@@ -1,0 +1,37 @@
+{
+  "manifest_version": 2,
+  "name": "LinkDump",
+  "version": "0.1",
+  "description": "Allows to select links and dump them in a file",
+  "icons": {
+    "48": "icons/linkdump-48.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "menus",
+    "notifications",
+    "storage",
+    "tabs"
+  ],
+
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/linkdump-16.png",
+      "32": "icons/linkdump-32.png"
+    },
+    "default_title": "LinkDump",
+    "default_popup": "popup/load.content.html"
+  },
+
+  "page_action": {
+    "default_icon": "icons/linkdump-32.png",
+    "default_title": "Add link to dump",
+    "show_matches": ["<all_urls>"]
+  },
+
+  "background": {
+    "scripts": ["background.js"]
+  }
+}
