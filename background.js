@@ -11,22 +11,22 @@ browser.menus.create({
 
 browser.menus.onClicked.addListener(info => {
   if (info.menuItemId === linkdumpAddId) {
-    addLink(info.linkUrl);
+    addLink(info.linkUrl, info.linkText);
   }
 });
 
 browser.pageAction.onClicked.addListener(tab => {
-  addLink(tab.url);
+  addLink(tab.url, tab.title);
 });
 
-function addLink(url) {
+function addLink(url, title) {
   browser.storage.local.get("urls")
   .then(obj => {
     var urls = [];
     if (obj.hasOwnProperty("urls")) {
       urls = obj.urls;
     }
-    urls.push(url);
+    urls.push({"url": url, "title": title});
 
     return browser.storage.local.set({"urls": urls});
   });
@@ -54,7 +54,7 @@ function download() {
       return;
     }
 
-    var content = obj.urls.reduce((a,b) => {return a + "\n" + b});
+    var content = obj.urls.reduce((a,b) => {return a + b.url + "\n"},'');
     var blob = new Blob([content], {type: "text/plain"});
 
     browser.downloads.download({

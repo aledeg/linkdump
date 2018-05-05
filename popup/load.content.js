@@ -3,7 +3,11 @@ browser.storage.local.get("urls")
   if (obj.urls) {
     obj.urls.forEach(function (item) {
       var listItem = document.createElement('p');
-      listItem.appendChild(document.createTextNode(item));
+      var itemLink = document.createElement('a');
+      itemLink.href = item.url;
+      itemLink.innerHTML = item.title;
+
+      listItem.appendChild(itemLink);
       document.querySelector("#popup-content").appendChild(listItem);
     });
   }
