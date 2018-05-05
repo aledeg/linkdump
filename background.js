@@ -66,4 +66,21 @@ function download() {
   });
 }
 
+function deleteLink(indexes) {
+  browser.storage.local.get("urls")
+  .then(obj => {
+    if (!obj.hasOwnProperty("urls")) {
+      return
+    }
+    urls = obj.urls;
+
+    indexes = indexes.reverse();
+    indexes.forEach(function(item) {
+      urls.splice(item, 1);
+    });
+
+    return browser.storage.local.set({"urls": urls});
+  });
+}
+
 browser.downloads.onChanged.addListener(handleChanged);

@@ -25,5 +25,5 @@ button {
   cursor: pointer;
   margin: 1px;
   padding: 0.5rem;
-  width: calc(50% - 2px);
+  width: calc(100% / 3 - 2px);
 }
