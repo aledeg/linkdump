@@ -9,7 +9,7 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  background-color: lightGrey
+  background-color: lightGrey;
 }
 #popup-content {
   min-width: 200px;
