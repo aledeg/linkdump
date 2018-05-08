@@ -1,0 +1,26 @@
+{
+  "name": "linkdump",
+  "version": "1.0.0",
+  "description": "Store links and dump them",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "lint": "eslint background.js popup",
+    "lint:fix": "npm run lint -- --quiet --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aledeg/linkdump.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aledeg/linkdump/issues"
+  },
+  "homepage": "https://github.com/aledeg/linkdump#readme",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.11.0"
+  }
+}
