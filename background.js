@@ -1,34 +1,49 @@
 const linkdumpAddId = "linkdump-add";
-const linkdumpDownloadId = "linkdump-download";
-
 let downloadId = 0;
-
-browser.menus.create({
-  id: linkdumpAddId,
-  title: "Add link to dump",
-  contexts: ["link"]
-});
-
-browser.menus.onClicked.addListener(info => {
-  if (info.menuItemId === linkdumpAddId) {
-    addLink(info.linkUrl, info.linkText);
-  }
-});
-
-browser.pageAction.onClicked.addListener(tab => {
-  addLink(tab.url, tab.title);
-});
 
 function addLink(url, title) {
   browser.storage.local.get("urls")
   .then(obj => {
-    let urls = [];
-    if (obj.hasOwnProperty("urls")) {
-      urls = obj.urls;
-    }
+    const urls = obj.urls || [];
     urls.push({"url": url, "title": title});
 
     return browser.storage.local.set({"urls": urls});
+  });
+}
+
+// Used by load.content.js
+// eslint-disable-next-line no-unused-vars
+function download() {
+  browser.storage.local.get("urls")
+  .then(obj => {
+    if (!obj.urls) return;
+
+    const content = obj.urls.reduce((a,b) => `${a + b.url  }\n`,'');
+    const blob = new Blob([content], {type: "text/plain"});
+
+    browser.downloads.download({
+      url: URL.createObjectURL(blob),
+      filename: "linkdump.txt",
+      saveAs: true
+    })
+    .then(id => {downloadId = id});
+  });
+}
+
+// Used by load.content.js
+// eslint-disable-next-line no-unused-vars
+function deleteLink(indexes) {
+  browser.storage.local.get("urls")
+  .then(obj => {
+    if (!obj.urls) return;
+    const { urls } = obj;
+
+    const reversedIndexes = indexes.reverse();
+    reversedIndexes.forEach((item) => {
+      urls.splice(item, 1);
+    });
+
+    browser.storage.local.set({"urls": urls});
   });
 }
 
@@ -47,40 +62,20 @@ function handleChanged(delta) {
   }
 }
 
-function download() {
-  browser.storage.local.get("urls")
-  .then(obj => {
-    if (!obj.hasOwnProperty("urls")) {
-      return;
-    }
+browser.menus.create({
+  id: linkdumpAddId,
+  title: "Add link to dump",
+  contexts: ["link"]
+});
 
-    const content = obj.urls.reduce((a,b) => `${a + b.url  }\n`,'');
-    const blob = new Blob([content], {type: "text/plain"});
+browser.menus.onClicked.addListener(info => {
+  if (info.menuItemId === linkdumpAddId) {
+    addLink(info.linkUrl, info.linkText);
+  }
+});
 
-    browser.downloads.download({
-      url: URL.createObjectURL(blob),
-      filename: "linkdump.txt",
-      saveAs: true
-    })
-    .then(id => {downloadId = id});
-  });
-}
-
-function deleteLink(indexes) {
-  browser.storage.local.get("urls")
-  .then(obj => {
-    if (!obj.hasOwnProperty("urls")) {
-      return
-    }
-    urls = obj.urls;
-
-    indexes = indexes.reverse();
-    indexes.forEach((item) => {
-      urls.splice(item, 1);
-    });
-
-    return browser.storage.local.set({"urls": urls});
-  });
-}
+browser.pageAction.onClicked.addListener(tab => {
+  addLink(tab.url, tab.title);
+});
 
 browser.downloads.onChanged.addListener(handleChanged);

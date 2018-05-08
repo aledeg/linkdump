@@ -19,17 +19,17 @@ browser.storage.local.get("urls")
   }
 });
 
-document.querySelector("#download").addEventListener("click", (e) => {
+document.querySelector("#download").addEventListener("click", () => {
   const page = browser.extension.getBackgroundPage();
   page.download();
 });
 
-document.querySelector("#clear").addEventListener("click", (e) => {
+document.querySelector("#clear").addEventListener("click", () => {
   browser.storage.local.clear();
   window.close();
 });
 
-document.querySelector("#delete").addEventListener("click", (e) => {
+document.querySelector("#delete").addEventListener("click", () => {
   const indexes = [];
   document.querySelectorAll('input[type="checkbox"]:checked').forEach((item) => {
     indexes.push(item.dataset.index);
