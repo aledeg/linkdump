@@ -1,7 +1,7 @@
 const linkdumpAddId = "linkdump-add";
 const linkdumpDownloadId = "linkdump-download";
 
-var downloadId = 0;
+let downloadId = 0;
 
 browser.menus.create({
   id: linkdumpAddId,
@@ -22,7 +22,7 @@ browser.pageAction.onClicked.addListener(tab => {
 function addLink(url, title) {
   browser.storage.local.get("urls")
   .then(obj => {
-    var urls = [];
+    let urls = [];
     if (obj.hasOwnProperty("urls")) {
       urls = obj.urls;
     }
@@ -54,8 +54,8 @@ function download() {
       return;
     }
 
-    var content = obj.urls.reduce((a,b) => {return a + b.url + "\n"},'');
-    var blob = new Blob([content], {type: "text/plain"});
+    const content = obj.urls.reduce((a,b) => `${a + b.url  }\n`,'');
+    const blob = new Blob([content], {type: "text/plain"});
 
     browser.downloads.download({
       url: URL.createObjectURL(blob),
@@ -75,7 +75,7 @@ function deleteLink(indexes) {
     urls = obj.urls;
 
     indexes = indexes.reverse();
-    indexes.forEach(function(item) {
+    indexes.forEach((item) => {
       urls.splice(item, 1);
     });
 
