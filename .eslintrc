@@ -1,0 +1,11 @@
+{
+  "extends": ["airbnb-base", "prettier"],
+  "plugins": ["compat"],
+  "env": {
+    "browser": true,
+    "webextensions": true
+  },
+  "rules": {
+    "compat/compat": "error"
+  }
+}
