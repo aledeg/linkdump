@@ -1,4 +1,5 @@
 const linkdumpAddId = 'linkdump-add';
+const textReducer = (carry, item) => `${carry + item.url}\n`;
 let downloadId = 0;
 
 function addLink(url, title) {
@@ -16,7 +17,7 @@ function download() {
   browser.storage.local.get('urls').then(obj => {
     if (!obj.urls) return;
 
-    const content = obj.urls.reduce((a, b) => `${a + b.url}\n`, '');
+    const content = obj.urls.reduce(textReducer, '');
     const blob = new Blob([content], { type: 'text/plain' });
 
     browser.downloads
