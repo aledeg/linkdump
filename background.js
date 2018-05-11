@@ -11,8 +11,6 @@ function addLink(url, title) {
   });
 }
 
-// Used by load.content.js
-// eslint-disable-next-line no-unused-vars
 function download() {
   browser.storage.local.get('urls').then(obj => {
     if (!obj.urls) return;
@@ -32,8 +30,6 @@ function download() {
   });
 }
 
-// Used by load.content.js
-// eslint-disable-next-line no-unused-vars
 function deleteLink(indexes) {
   browser.storage.local.get('urls').then(obj => {
     if (!obj.urls) return;
@@ -64,6 +60,19 @@ function handleChanged(delta) {
   }
 }
 
+function handleMessage(message) {
+  switch (message.action) {
+    case 'download':
+      download();
+      break;
+    case 'delete':
+      deleteLink(message.payload);
+      break;
+    default:
+      // Do nothing on purpose
+  }
+}
+
 browser.menus.create({
   id: linkdumpAddId,
   title: 'Add link to dump',
@@ -81,3 +90,5 @@ browser.pageAction.onClicked.addListener(tab => {
 });
 
 browser.downloads.onChanged.addListener(handleChanged);
+
+browser.runtime.onMessage.addListener(handleMessage);

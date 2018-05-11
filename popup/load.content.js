@@ -19,8 +19,9 @@ browser.storage.local.get('urls').then(obj => {
 });
 
 document.querySelector('#download').addEventListener('click', () => {
-  const page = browser.extension.getBackgroundPage();
-  page.download();
+  browser.runtime.sendMessage({
+    action: 'download'
+  });
 });
 
 document.querySelector('#clear').addEventListener('click', () => {
@@ -33,7 +34,9 @@ document.querySelector('#delete').addEventListener('click', () => {
   document.querySelectorAll('input[type="checkbox"]:checked').forEach(item => {
     indexes.push(item.dataset.index);
   });
-  const page = browser.extension.getBackgroundPage();
-  page.deleteLink(indexes);
+  browser.runtime.sendMessage({
+    action: 'delete',
+    payload: indexes
+  });
   window.close();
 });
