@@ -26,8 +26,9 @@ document.querySelector('#download').addEventListener('click', () => {
 });
 
 document.querySelector('#clear').addEventListener('click', () => {
-  browser.storage.local.clear();
-  window.close();
+  browser.runtime.sendMessage({
+    action: 'clear'
+  });
 });
 
 document.querySelector('#delete').addEventListener('click', () => {

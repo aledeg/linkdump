@@ -5,6 +5,15 @@ const htmlReducer = (carry, item) => `${carry}<a href="${item.url}">${item.title
 let downloadId = 0;
 const downloadOptions = {};
 
+function notification(message) {
+  return browser.notifications
+      .create('download-notification', {
+        type: 'basic',
+        iconUrl: browser.extension.getURL('icons/linkdump-48.png'),
+        title: 'Linkdump',
+        message
+      });
+}
 
 function addLink(url, title) {
   browser.storage.local.get('urls').then(obj => {
@@ -69,7 +78,11 @@ function deleteLink(indexes) {
     });
 
     browser.storage.local.set({ urls });
-  });
+  }).then(notification('Links removed'));
+}
+
+function clear() {
+  browser.storage.local.clear().then(notification('Storage cleared'));
 }
 
 function handleChanged(delta) {
@@ -77,14 +90,7 @@ function handleChanged(delta) {
     return;
   }
   if (delta.state && delta.state.current === 'complete') {
-    browser.notifications
-      .create('download-notification', {
-        type: 'basic',
-        iconUrl: browser.extension.getURL('icons/linkdump-48.png'),
-        title: 'Linkdump',
-        message: 'Download complete'
-      })
-      .then(browser.storage.local.clear());
+    browser.storage.local.clear().then(notification('Download complete'));
   }
 }
 
@@ -96,6 +102,9 @@ function handleMessage(message) {
       break;
     case 'delete':
       deleteLink(message.payload);
+      break;
+    case 'clear':
+      clear();
       break;
     default:
       // Do nothing on purpose
