@@ -1,5 +1,4 @@
 p {
-  font-size: 0.75rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -10,8 +9,9 @@ body {
   flex-direction: row;
   flex-wrap: wrap;
   background-color: lightGrey;
+  font-size: 0.75rem;
 }
-#popup-content {
+div {
   min-width: 200px;
   width: 100%;
   border: 1px solid gray;
@@ -26,4 +26,8 @@ button {
   margin: 1px;
   padding: 0.5rem;
   width: calc(100% / 3 - 2px);
+}
+fieldset {
+  width: 100%;
+  margin: 0;
 }

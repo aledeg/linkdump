@@ -1,6 +1,10 @@
 const linkdumpAddId = 'linkdump-add';
 const textReducer = (carry, item) => `${carry + item.url}\n`;
+const markdownReducer = (carry, item) => `${carry}[${item.title}](${item.url})\n`;
+const htmlReducer = (carry, item) => `${carry}<a href="${item.url}">${item.title}</a><br/>\n`;
 let downloadId = 0;
+const downloadOptions = {};
+
 
 function addLink(url, title) {
   browser.storage.local.get('urls').then(obj => {
@@ -11,17 +15,41 @@ function addLink(url, title) {
   });
 }
 
+function getdownloadOptions(format) {
+  let reducer = textReducer;
+  let filename = 'linkdump.txt';
+  let type = 'text/plain';
+  switch (format) {
+    case 'markdown':
+      reducer = markdownReducer;
+      filename = 'linkdump.md';
+      type = 'text/markdown';
+      break;
+    case 'html':
+      reducer = htmlReducer;
+      filename = 'linkdump.html';
+      type = 'text/html';
+      break;
+    default:
+      // Do nothing on purpose
+  }
+
+  downloadOptions.reducer = reducer;
+  downloadOptions.filename = filename;
+  downloadOptions.type = type;
+}
+
 function download() {
   browser.storage.local.get('urls').then(obj => {
     if (!obj.urls) return;
 
-    const content = obj.urls.reduce(textReducer, '');
-    const blob = new Blob([content], { type: 'text/plain' });
+    const content = obj.urls.reduce(downloadOptions.reducer, '');
+    const blob = new Blob([content], { type: downloadOptions.type });
 
     browser.downloads
       .download({
         url: URL.createObjectURL(blob),
-        filename: 'linkdump.txt',
+        filename: downloadOptions.filename,
         saveAs: true
       })
       .then(id => {
@@ -63,6 +91,7 @@ function handleChanged(delta) {
 function handleMessage(message) {
   switch (message.action) {
     case 'download':
+      getdownloadOptions(message.payload);
       download();
       break;
     case 'delete':

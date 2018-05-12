@@ -8,6 +8,15 @@
 
 <body>
   <div id="popup-content"></div>
+  <fieldset>
+    <legend>Download type</legend>
+    <input type="radio" value="text" id="radioText" name="downloadType" checked/>
+    <label for="radioText">Text</label>
+    <input type="radio" value="markdown" id="radioMarkdown" name="downloadType"/>
+    <label for="radioMarkdown">Markdown</label>
+    <input type="radio" value="html" id="radioHtml" name="downloadType"/>
+    <label for="radioHtml">HTML</label>
+  </fieldset>
   <button id="download">Download dump</button>
   <button id="delete">Delete from dump</button>
   <button id="clear">Clear dump</button>

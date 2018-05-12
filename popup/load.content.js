@@ -20,7 +20,8 @@ browser.storage.local.get('urls').then(obj => {
 
 document.querySelector('#download').addEventListener('click', () => {
   browser.runtime.sendMessage({
-    action: 'download'
+    action: 'download',
+    payload: document.querySelector('input[type="radio"]:checked').value
   });
 });
 
