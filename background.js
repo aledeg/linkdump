@@ -24,7 +24,7 @@ function addLink(url, title) {
   });
 }
 
-function getdownloadOptions(format) {
+function getDownloadOptions(format) {
   let reducer = textReducer;
   let filename = 'linkdump.txt';
   let type = 'text/plain';
@@ -107,7 +107,7 @@ function handleChanged(delta) {
 function handleMessage(message) {
   switch (message.action) {
     case 'download':
-      getdownloadOptions(message.payload);
+      getDownloadOptions(message.payload);
       download();
       break;
     case 'delete':
