@@ -40,5 +40,16 @@ document.querySelector('#delete').addEventListener('click', () => {
     action: 'delete',
     payload: indexes
   });
-  window.close();
 });
+
+function handleMessage(message) {
+  switch (message.action) {
+    case 'reload':
+      window.location.reload(true);
+      break;
+    default:
+      // Do nothing on purpose
+  }
+}
+
+browser.runtime.onMessage.addListener(handleMessage);
