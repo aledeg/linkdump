@@ -1,4 +1,5 @@
-const linkdumpAddId = 'linkdump-add';
+const linkAddId = 'link-add';
+const bookmarkAddId = 'bookmark-add';
 const textReducer = (carry, item) => `${carry + item.url}\n`;
 const markdownReducer = (carry, item) => `${carry}[${item.title}](${item.url})\n`;
 const htmlReducer = (carry, item) => `${carry}<a href="${item.url}">${item.title}</a><br/>\n`;
@@ -14,13 +15,28 @@ function notification(message) {
       });
 }
 
-function addLink(url, title) {
-  browser.storage.local.get('urls').then(obj => {
-    const urls = obj.urls || [];
-    urls.push({ url, title });
+async function addLink(link) {
+  const obj = await browser.storage.local.get('urls');
+  const urls = obj.urls || [];
+  urls.push(link);
+  await browser.storage.local.set({ urls });
+}
 
-    return browser.storage.local.set({ urls });
-  });
+async function addBookmark(id) {
+  const bookmarks = await browser.bookmarks.get(id);
+  for (let bookmark of bookmarks) {
+    switch (bookmark.type) {
+      case 'bookmark':
+        await addLink({ url: bookmark.url, title: bookmark.title});
+        break;
+      case 'folder':
+        const children = await browser.bookmarks.getChildren(bookmark.id);
+        addBookmark(children.map(obj => obj.id));
+        break;
+      default:
+        // Do nothing on purpose
+    }
+  }
 }
 
 function getDownloadOptions(format) {
@@ -118,19 +134,32 @@ function handleMessage(message) {
 }
 
 browser.menus.create({
-  id: linkdumpAddId,
+  id: linkAddId,
   title: 'Add link to dump',
   contexts: ['link']
 });
 
+browser.menus.create({
+  id: bookmarkAddId,
+  title: 'Add to dump',
+  contexts: ['bookmark']
+});
+
 browser.menus.onClicked.addListener(info => {
-  if (info.menuItemId === linkdumpAddId) {
-    addLink(info.linkUrl, info.linkText);
+  switch (info.menuItemId) {
+    case linkAddId:
+      addLink({ url: info.linkUrl, title: info.linkText});
+      break;
+    case bookmarkAddId:
+      addBookmark(info.bookmarkId);
+      break;
+    default:
+      // Do nothing on purpose
   }
 });
 
 browser.pageAction.onClicked.addListener(tab => {
-  addLink(tab.url, tab.title);
+  addLink({ url: tab.url, title: tab.title});
 });
 
 browser.downloads.onChanged.addListener(handleChanged);
