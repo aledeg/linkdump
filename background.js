@@ -70,12 +70,9 @@ function deleteLink(indexes) {
     if (!obj.urls) return;
     const { urls } = obj;
 
-    const reversedIndexes = indexes.reverse();
-    reversedIndexes.forEach(item => {
-      urls.splice(item, 1);
-    });
+    const filteredUrls = urls.filter((url, index) => !indexes.includes(index));
 
-    browser.storage.local.set({ urls });
+    browser.storage.local.set({ urls: filteredUrls });
   }).then(
     notification('Links removed')
   ).then(browser.runtime.sendMessage({

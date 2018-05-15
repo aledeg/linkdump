@@ -34,7 +34,7 @@ document.querySelector('#clear').addEventListener('click', () => {
 document.querySelector('#delete').addEventListener('click', () => {
   const indexes = [];
   document.querySelectorAll('input[type="checkbox"]:checked').forEach(item => {
-    indexes.push(item.dataset.index);
+    indexes.push(Number(item.dataset.index));
   });
   browser.runtime.sendMessage({
     action: 'delete',
