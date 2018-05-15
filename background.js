@@ -3,7 +3,6 @@ const textReducer = (carry, item) => `${carry + item.url}\n`;
 const markdownReducer = (carry, item) => `${carry}[${item.title}](${item.url})\n`;
 const htmlReducer = (carry, item) => `${carry}<a href="${item.url}">${item.title}</a><br/>\n`;
 let downloadId = 0;
-const downloadOptions = {};
 
 function notification(message) {
   return browser.notifications
@@ -25,30 +24,29 @@ function addLink(url, title) {
 }
 
 function getDownloadOptions(format) {
-  let reducer = textReducer;
-  let filename = 'linkdump.txt';
-  let type = 'text/plain';
   switch (format) {
     case 'markdown':
-      reducer = markdownReducer;
-      filename = 'linkdump.md';
-      type = 'text/markdown';
-      break;
+      return {
+        reducer: markdownReducer,
+        filename: 'linkdump.md',
+        type: 'text/markdown'
+      };
     case 'html':
-      reducer = htmlReducer;
-      filename = 'linkdump.html';
-      type = 'text/html';
-      break;
+      return {
+        reducer: htmlReducer,
+        filename: 'linkdump.html',
+        type: 'text/html'
+      };
     default:
-      // Do nothing on purpose
+      return {
+        reducer: textReducer,
+        filename: 'linkdump.txt',
+        type: 'text/plain'
+      }
   }
-
-  downloadOptions.reducer = reducer;
-  downloadOptions.filename = filename;
-  downloadOptions.type = type;
 }
 
-function download() {
+function download(downloadOptions) {
   browser.storage.local.get('urls').then(obj => {
     if (!obj.urls) return;
 
@@ -106,10 +104,11 @@ function handleChanged(delta) {
 
 function handleMessage(message) {
   switch (message.action) {
-    case 'download':
-      getDownloadOptions(message.payload);
-      download();
+    case 'download': {
+      const options = getDownloadOptions(message.payload);
+      download(options);
       break;
+    }
     case 'delete':
       deleteLink(message.payload);
       break;
