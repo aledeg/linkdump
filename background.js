@@ -81,14 +81,14 @@ function download(downloadOptions) {
   });
 }
 
-function deleteLink(indexes) {
+function deleteLink(index) {
   browser.storage.local.get('urls').then(obj => {
     if (!obj.urls) return;
     const { urls } = obj;
 
-    const filteredUrls = urls.filter((url, index) => !indexes.includes(index));
+    urls.splice(index, 1);
 
-    browser.storage.local.set({ urls: filteredUrls });
+    browser.storage.local.set({ urls });
   }).then(
     notification('Links removed')
   ).then(browser.runtime.sendMessage({

@@ -2,32 +2,28 @@ p {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0.25rem;
+  margin: 0.1rem;
 }
 body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  background-color: lightGrey;
   font-size: 0.75rem;
 }
 div {
-  min-width: 200px;
-  width: 100%;
-  border: 1px solid gray;
-  margin: 1px 1px 10px;
-  padding: 5px;
-  background-color: white;
+  margin: 0.5rem;
 }
-button {
-  background-color: lightBlue;
-  border: 1px outset blue;
+div:last-of-type {
+  margin-left: 0;
+}
+#popup-content {
+  width: 100%;
+}
+#popup-content button {
+  background-color: transparent;
+  border: none;
   cursor: pointer;
-  margin: 1px;
-  padding: 0.5rem;
-  width: calc(100% / 3 - 2px);
 }
-fieldset {
-  width: 100%;
-  margin: 0;
+#popup-content img {
+  height: 16px;
 }
