@@ -89,9 +89,7 @@ function deleteLink(index) {
     urls.splice(index, 1);
 
     browser.storage.local.set({ urls });
-  }).then(
-    notification('Links removed')
-  ).then(browser.runtime.sendMessage({
+  }).then(browser.runtime.sendMessage({
     action: 'reload'
   }));
 }
@@ -99,10 +97,6 @@ function deleteLink(index) {
 function clear() {
   browser.storage.local.clear().then(
     notification('Storage cleared')
-  ).then(
-    browser.runtime.sendMessage({
-      action: 'reload'
-    })
   );
 }
 

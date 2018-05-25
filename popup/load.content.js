@@ -43,7 +43,7 @@ document.querySelectorAll('.download').forEach(item => {
 document.querySelector('#clear').addEventListener('click', () => {
   browser.runtime.sendMessage({
     action: 'clear'
-  });
+  }).then(window.close());
 });
 
 document.querySelector('.dropdown-toggle').addEventListener('click', (event) => {
