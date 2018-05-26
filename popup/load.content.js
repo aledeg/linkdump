@@ -13,7 +13,7 @@ function loadDump() {
         const listItem = document.createElement('p');
         const itemLink = document.createElement('a');
         itemLink.href = item.url;
-        itemLink.innerHTML = item.title;
+        itemLink.textContent = item.title;
         const itemDelete = document.createElement('button');
         itemDelete.dataset.index = index;
         itemDelete.onclick = deleteItem;

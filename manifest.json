@@ -1,7 +1,13 @@
 {
+  "applications": {
+    "gecko": {
+      "id": "{c72c9666-1bfa-4558-ab70-44cb09caaac6}"
+    }
+  },
+
   "manifest_version": 2,
   "name": "LinkDump",
-  "version": "0.1",
+  "version": "1.0",
   "description": "Allows to select links and dump them in a file",
   "icons": {
     "48": "icons/linkdump-48.png"
