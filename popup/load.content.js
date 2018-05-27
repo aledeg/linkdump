@@ -34,7 +34,7 @@ function drawContent() {
       });
     } else {
       const emptyItem = document.createElement('p');
-      emptyItem.innerHTML = browser.i18n.getMessage('popupContentEmpty');
+      emptyItem.textContent = browser.i18n.getMessage('popupContentEmpty');
       document.querySelector('#popup-content').appendChild(emptyItem);
     }
   });
