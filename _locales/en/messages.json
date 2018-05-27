@@ -1,0 +1,39 @@
+{
+  "extensionDescription": {
+    "message": "Allows to select links and dump them in a file",
+    "description": "Extension description shown to user."
+  },
+  "menuAddToDump": {
+    "message": "Add to dump",
+    "description": "Add to dump entry in menus."
+  },
+  "notificationDownlowdComplete": {
+    "message": "Download complete",
+    "description": "Notify the user that the download is complete."
+  },
+  "notificationStorageCleared": {
+    "message": "Storage cleared",
+    "description": "Notify the user that the storage has been cleared."
+  },
+  "popupButtonClear": {
+    "message": "Clear dump",
+    "description": "Label for the clear dump button"
+  },
+  "popupButtonDefaultDownload": {
+    "message": "Download",
+    "description": "Label for the default download button"
+  },
+  "popupButtonDownload": {
+    "message": "Download as $TYPE$",
+    "description": "Label for the typed download buttons",
+    "placeholders": {
+      "type": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupContentEmpty": {
+    "message": "The dump is empty!",
+    "description": "Default content when there is no link in the dump."
+  }
+}

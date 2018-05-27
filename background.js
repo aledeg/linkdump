@@ -11,7 +11,7 @@ function notification(message) {
         type: 'basic',
         iconUrl: browser.extension.getURL('icons/linkdump-48.png'),
         title: 'Linkdump',
-        message
+        message: browser.i18n.getMessage(message)
       });
 }
 
@@ -96,7 +96,7 @@ function deleteLink(index) {
 
 function clear() {
   browser.storage.local.clear().then(
-    notification('Storage cleared')
+    notification('notificationStorageCleared')
   );
 }
 
@@ -105,7 +105,7 @@ function handleChanged(delta) {
     return;
   }
   if (delta.state && delta.state.current === 'complete') {
-    browser.storage.local.clear().then(notification('Download complete'));
+    browser.storage.local.clear().then(notification('notificationDownloadComplete'));
   }
 }
 
@@ -129,13 +129,13 @@ function handleMessage(message) {
 
 browser.menus.create({
   id: linkAddId,
-  title: 'Add link to dump',
+  title: browser.i18n.getMessage('menuAddToDump'),
   contexts: ['link']
 });
 
 browser.menus.create({
   id: bookmarkAddId,
-  title: 'Add to dump',
+  title: browser.i18n.getMessage('menuAddToDump'),
   contexts: ['bookmark']
 });
 

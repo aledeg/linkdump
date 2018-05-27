@@ -1,0 +1,39 @@
+{
+  "extensionDescription": {
+    "message": "Permet d'entreposer des liens et de les enregistrer dans un fichier",
+    "description": "Extension description shown to user."
+  },
+  "menuAddToDump": {
+    "message": "Entreposer",
+    "description": "Add to dump entry in menus."
+  },
+  "notificationDownlowdComplete": {
+    "message": "Téléchargement terminé",
+    "description": "Notify the user that the download is complete."
+  },
+  "notificationStorageCleared": {
+    "message": "Entrepôt nettoyé",
+    "description": "Notify the user that the storage has been cleared."
+  },
+  "popupButtonClear": {
+    "message": "Nettoyer l'entrepôt",
+    "description": "Label for the clear dump button"
+  },
+  "popupButtonDefaultDownload": {
+    "message": "Télécharger",
+    "description": "Label for the default download button"
+  },
+  "popupButtonDownload": {
+    "message": "Télécharger en $TYPE$",
+    "description": "Label for the typed download buttons",
+    "placeholders": {
+      "type": {
+        "content": "$1"
+      }
+    }
+  },
+  "popupContentEmpty": {
+    "message": "L'entrepôt est vide !",
+    "description": "Default content when there is no link in the dump."
+  }
+}

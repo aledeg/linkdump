@@ -5,8 +5,14 @@ function deleteItem(event) {
   });
 }
 
-function loadDump() {
+function drawContent() {
+  document.querySelector('#clear').textContent = browser.i18n.getMessage('popupButtonClear');
+  document.querySelector('button[data-type="text"]').textContent = browser.i18n.getMessage('popupButtonDefaultDownload');
+  document.querySelector('a[data-type="html"]').textContent = browser.i18n.getMessage('popupButtonDownload', 'HTML');
+  document.querySelector('a[data-type="text"]').textContent = browser.i18n.getMessage('popupButtonDownload', 'text');
+  document.querySelector('a[data-type="markdown"]').textContent = browser.i18n.getMessage('popupButtonDownload', 'markdown');
   document.querySelector('#popup-content').innerHTML = '';
+
   browser.storage.local.get('urls').then(obj => {
     if (obj.urls && obj.urls.length !== 0) {
       obj.urls.forEach((item, index) => {
@@ -28,7 +34,7 @@ function loadDump() {
       });
     } else {
       const emptyItem = document.createElement('p');
-      emptyItem.innerHTML = 'The dump is empty!';
+      emptyItem.innerHTML = browser.i18n.getMessage('popupContentEmpty');
       document.querySelector('#popup-content').appendChild(emptyItem);
     }
   });
@@ -59,7 +65,7 @@ document.querySelector('.dropdown-toggle').addEventListener('click', (event) => 
 function handleMessage(message) {
   switch (message.action) {
     case 'reload':
-      loadDump();
+      drawContent();
       break;
     default:
       // Do nothing on purpose
@@ -67,4 +73,4 @@ function handleMessage(message) {
 }
 
 browser.runtime.onMessage.addListener(handleMessage);
-loadDump();
+drawContent();
