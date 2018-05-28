@@ -37,6 +37,11 @@ function drawContent() {
       const emptyItem = document.createElement('p');
       emptyItem.textContent = browser.i18n.getMessage('popupContentEmpty');
       document.querySelector('#popup-content').appendChild(emptyItem);
+      document.querySelectorAll('div').forEach(item => {
+        if (item.id !== 'popup-content') {
+          item.classList.add('empty');
+        }
+      });
     }
   });
 }

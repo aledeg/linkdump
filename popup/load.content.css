@@ -27,3 +27,6 @@ div:last-of-type {
 .delete img {
   height: 16px;
 }
+.empty {
+  display: none;
+}
