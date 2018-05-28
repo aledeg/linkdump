@@ -23,6 +23,7 @@ function drawContent() {
         const itemDelete = document.createElement('button');
         itemDelete.dataset.index = index;
         itemDelete.onclick = deleteItem;
+        itemDelete.classList = 'delete'
         const deleteImage = document.createElement('img');
         deleteImage.src = browser.extension.getURL('icons/trash-48.png');
         itemDelete.appendChild(deleteImage);

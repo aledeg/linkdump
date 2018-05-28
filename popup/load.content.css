@@ -19,11 +19,11 @@ div:last-of-type {
 #popup-content {
   width: 100%;
 }
-#popup-content button {
+.delete {
   background-color: transparent;
   border: none;
   cursor: pointer;
 }
-#popup-content img {
+.delete img {
   height: 16px;
 }
