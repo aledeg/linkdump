@@ -7,7 +7,7 @@
     "message": "Entreposer",
     "description": "Add to dump entry in menus."
   },
-  "notificationDownlowdComplete": {
+  "notificationDownloadComplete": {
     "message": "Téléchargement terminé",
     "description": "Notify the user that the download is complete."
   },

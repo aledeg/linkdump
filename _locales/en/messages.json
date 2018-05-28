@@ -7,7 +7,7 @@
     "message": "Add to dump",
     "description": "Add to dump entry in menus."
   },
-  "notificationDownlowdComplete": {
+  "notificationDownloadComplete": {
     "message": "Download complete",
     "description": "Notify the user that the download is complete."
   },
