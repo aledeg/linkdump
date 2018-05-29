@@ -1,5 +1,9 @@
 # linkdump
 
+## Where do I get it?
+
+On [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/linkdump).
+
 ## What's that?
 
 Linkdump is a Firefox extension which allows you to store links, URL, and bookmarks
