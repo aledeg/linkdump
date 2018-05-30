@@ -9,14 +9,20 @@
 
 <body>
   <div id="popup-content"></div>
-  <div class="btn-group dropup">
-    <button type="button" class="btn btn-sm btn-primary download" data-type="text"></button>
-    <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-    <div class="dropdown-menu btn-sm">
-      <a class="dropdown-item download btn-sm" href="#" data-type="text"></a>
-      <a class="dropdown-item download btn-sm" href="#" data-type="markdown"></a>
-      <a class="dropdown-item download btn-sm" href="#" data-type="html"></a>
-    </div>
+  <div class="btn-group" role="group" aria-label="Action">
+    <button type="button" class="btn btn-sm btn-primary" data-action="download" data-format="text"></button>
+    <button type="button" class="btn btn-sm btn-primary" data-action="copy" data-format="text"></button>
+  </div>
+  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+    <label class="btn btn-secondary btn-sm active">
+      <input type="radio" name="formats" id="text" autocomplete="off" data-format="text" checked> TXT
+    </label>
+    <label class="btn btn-secondary btn-sm">
+      <input type="radio" name="formats" id="markdown" autocomplete="off" data-format="markdown"> MD
+    </label>
+    <label class="btn btn-secondary btn-sm">
+      <input type="radio" name="formats" id="html" autocomplete="off" data-format="html"> HTML
+    </label>
   </div>
   <div>
     <button id="clear" class="btn btn-outline-primary btn-sm"></button>

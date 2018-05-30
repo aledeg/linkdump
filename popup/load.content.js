@@ -6,12 +6,12 @@ function deleteItem(event) {
 }
 
 function drawContent() {
-  document.querySelector('#clear').textContent = browser.i18n.getMessage('popupButtonClear');
-  document.querySelector('button[data-type="text"]').textContent = browser.i18n.getMessage('popupButtonDefaultDownload');
-  document.querySelector('a[data-type="html"]').textContent = browser.i18n.getMessage('popupButtonDownload', 'HTML');
-  document.querySelector('a[data-type="text"]').textContent = browser.i18n.getMessage('popupButtonDownload', 'text');
-  document.querySelector('a[data-type="markdown"]').textContent = browser.i18n.getMessage('popupButtonDownload', 'markdown');
+  document.querySelector('#clear').textContent = browser.i18n.getMessage('popupButtonActionClear');
   document.querySelector('#popup-content').innerHTML = '';
+  document.querySelectorAll('[data-action]').forEach(item => {
+    const action = item.dataset.action[0].toUpperCase() + item.dataset.action.slice(1);
+    item.textContent = browser.i18n.getMessage(`popupButtonAction${action}`);
+  });
 
   browser.storage.local.get('urls').then(obj => {
     if (obj.urls && obj.urls.length !== 0) {
@@ -46,11 +46,38 @@ function drawContent() {
   });
 }
 
-document.querySelectorAll('.download').forEach(item => {
+function copyToClipboard(content) {
+  const textarea = document.createElement('textarea');
+  textarea.textContent = content;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+  browser.runtime.sendMessage({
+    action: 'copied'
+  }).then(window.close());
+}
+
+document.querySelectorAll('[data-action]').forEach(item => {
   item.addEventListener('click', (event) => {
     browser.runtime.sendMessage({
-      action: 'download',
-      payload: event.target.dataset.type
+      action: event.target.dataset.action,
+      payload: event.target.dataset.format
+    });
+  });
+});
+
+document.querySelectorAll('[name="formats"]').forEach(item => {
+  item.addEventListener('click', (event) => {
+    document.querySelectorAll('[name="formats"]').forEach(current => {
+      if (current === event.target) {
+        current.parentNode.classList.add('active');
+      } else {
+        current.parentNode.classList.remove('active');
+      };
+    });
+    document.querySelectorAll('[data-action]').forEach(current => {
+      current.dataset.format = event.target.dataset.format;
     });
   });
 });
@@ -61,17 +88,13 @@ document.querySelector('#clear').addEventListener('click', () => {
   }).then(window.close());
 });
 
-document.querySelector('.dropdown-toggle').addEventListener('click', (event) => {
-  event.target.parentNode.classList.toggle('show');
-  event.target.nextElementSibling.classList.toggle('show');
-  const expanded = event.target.getAttribute('aria-expanded') === 'true' ? 'false' : 'true';
-  event.target.setAttribute('aria-expanded', expanded);
-});
-
 function handleMessage(message) {
   switch (message.action) {
     case 'reload':
       drawContent();
+      break;
+    case 'copy':
+      copyToClipboard(message.payload);
       break;
     default:
       // Do nothing on purpose

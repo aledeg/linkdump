@@ -24,7 +24,7 @@ async function addLink(link) {
 
 async function addBookmark(id) {
   const bookmarks = await browser.bookmarks.get(id);
-  for (let bookmark of bookmarks) {
+  for (const bookmark of bookmarks) {
     switch (bookmark.type) {
       case 'bookmark':
         await addLink({ url: bookmark.url, title: bookmark.title});
@@ -60,6 +60,19 @@ function getDownloadOptions(format) {
         type: 'text/plain'
       }
   }
+}
+
+function copy(downloadOptions) {
+  browser.storage.local.get('urls').then(obj => {
+    if (!obj.urls) return;
+
+    const content = obj.urls.reduce(downloadOptions.reducer, '');
+
+    browser.runtime.sendMessage({
+      action: 'copy',
+      payload: content
+    })
+  });
 }
 
 function download(downloadOptions) {
@@ -114,6 +127,15 @@ function handleMessage(message) {
     case 'download': {
       const options = getDownloadOptions(message.payload);
       download(options);
+      break;
+    }
+    case 'copy': {
+      const options = getDownloadOptions(message.payload);
+      copy(options);
+      break;
+    }
+    case 'copied': {
+      notification('notificationStorageCopied');
       break;
     }
     case 'delete':
