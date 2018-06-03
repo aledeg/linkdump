@@ -19,6 +19,10 @@
     "message": "Storage copied",
     "description": "Notify the user that the storage has been copied to the clipboard."
   },
+  "optionsDefaultFormat": {
+    "message": "Default format",
+    "description": "Label for the default format option"
+  },
   "popupButtonActionClear": {
     "message": "Clear dump",
     "description": "Label for the clear dump button"

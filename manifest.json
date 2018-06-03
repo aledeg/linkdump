@@ -7,7 +7,7 @@
 
   "manifest_version": 2,
   "name": "LinkDump",
-  "version": "1.3",
+  "version": "1.4",
   "description": "__MSG_extensionDescription__",
   "icons": {
     "48": "icons/linkdump-48.png"
@@ -37,6 +37,11 @@
     "default_icon": "icons/linkdump-32.png",
     "default_title": "__MSG_menuAddToDump__",
     "show_matches": ["<all_urls>"]
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true
   },
 
   "background": {

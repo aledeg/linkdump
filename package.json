@@ -1,13 +1,13 @@
 {
   "name": "linkdump",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Store links and dump them",
   "main": "background.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
-    "lint": "eslint background.js popup",
+    "lint": "eslint background.js popup options",
     "lint:fix": "npm run lint -- --quiet --fix",
-    "prettify": "prettier --write background.js popup/**/*.{js,css}"
+    "prettify": "prettier --write background.js popup/**/*.{js,css} options/**/*.{js.css}"
   },
   "repository": {
     "type": "git",
