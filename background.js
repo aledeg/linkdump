@@ -108,7 +108,7 @@ function deleteLink(index) {
 }
 
 function clear() {
-  browser.storage.local.clear().then(
+  browser.storage.local.remove('urls').then(
     notification('notificationStorageCleared')
   );
 }
@@ -118,7 +118,7 @@ function handleChanged(delta) {
     return;
   }
   if (delta.state && delta.state.current === 'complete') {
-    browser.storage.local.clear().then(notification('notificationDownloadComplete'));
+    browser.storage.local.remove('urls').then(notification('notificationDownloadComplete'));
   }
 }
 
