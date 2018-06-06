@@ -26,10 +26,10 @@ function drawContent() {
     const action = item.dataset.action[0].toUpperCase() + item.dataset.action.slice(1);
     item.textContent = browser.i18n.getMessage(`popupButtonAction${action}`);
   });
-  browser.storage.local.get('defaultFormat').then(obj => {
-    if (obj.defaultFormat) {
-      const target = document.querySelector(`[name="formats"][data-format="${obj.defaultFormat}"]`);
-      formatSelect(target, obj.defaultFormat);
+  browser.storage.local.get('options').then(obj => {
+    if (obj.options.defaultFormat) {
+      const target = document.querySelector(`[name="formats"][data-format="${obj.options.defaultFormat}"]`);
+      formatSelect(target, obj.options.defaultFormat);
     }
   });
 
