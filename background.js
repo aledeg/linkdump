@@ -118,7 +118,11 @@ function handleChanged(delta) {
     return;
   }
   if (delta.state && delta.state.current === 'complete') {
-    browser.storage.local.remove('urls').then(notification('notificationDownloadComplete'));
+    browser.storage.local.get('options').then(obj => {
+      if (obj.options.clearAfterDownload) {
+        browser.storage.local.remove('urls');
+      }
+    }).then(notification('notificationDownloadComplete'));
   }
 }
 

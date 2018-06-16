@@ -19,6 +19,10 @@
     "message": "Entrepôt copié",
     "description": "Notify the user that the storage has been copied to the clipboard."
   },
+  "optionsClearAfterDownload": {
+    "message": "Nettoyer l'entrepôt automatiquement après le téléchargement",
+    "description": "Label for the option to select if the dump is cleared after downloading it"
+  },
   "optionsDefaultFormat": {
     "message": "Format par défaut",
     "description": "Label for the default format option"

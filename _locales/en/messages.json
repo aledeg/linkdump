@@ -19,6 +19,10 @@
     "message": "Storage copied",
     "description": "Notify the user that the storage has been copied to the clipboard."
   },
+  "optionsClearAfterDownload": {
+    "message": "Clear dump automatically after download",
+    "description": "Label for the option to select if the dump is cleared after downloading it"
+  },
   "optionsDefaultFormat": {
     "message": "Default format",
     "description": "Label for the default format option"

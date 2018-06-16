@@ -31,6 +31,9 @@ function drawContent() {
       const target = document.querySelector(`[name="formats"][data-format="${obj.options.defaultFormat}"]`);
       formatSelect(target, obj.options.defaultFormat);
     }
+    if (obj.options.clearAfterDownload) {
+      document.querySelector('[data-action="download"]').dataset.clear = true;
+    }
   });
 
   browser.storage.local.get('urls').then(obj => {
