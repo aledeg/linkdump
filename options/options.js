@@ -21,6 +21,7 @@ document.querySelectorAll('input').forEach(item => {
 });
 
 document.querySelector('[for="defaultFormat"]').textContent = browser.i18n.getMessage(`optionsDefaultFormat`);
+document.querySelector('[for="clearAfterCopy"]').textContent = browser.i18n.getMessage(`optionsClearAfterCopy`);
 document.querySelector('[for="clearAfterDownload"]').textContent = browser.i18n.getMessage(`optionsClearAfterDownload`);
 
 browser.storage.local.get('options').then(obj => {
@@ -29,5 +30,8 @@ browser.storage.local.get('options').then(obj => {
   }
   if (obj.options.clearAfterDownload) {
     document.querySelector('[name="clearAfterDownload"]').checked = obj.options.clearAfterDownload;
+  }
+  if (obj.options.clearAfterCopy) {
+    document.querySelector('[name="clearAfterCopy"]').checked = obj.options.clearAfterCopy;
   }
 });

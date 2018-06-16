@@ -139,7 +139,11 @@ function handleMessage(message) {
       break;
     }
     case 'copied': {
-      notification('notificationStorageCopied');
+      browser.storage.local.get('options').then(obj => {
+        if (obj.options.clearAfterCopy) {
+          browser.storage.local.remove('urls');
+        }
+      }).then(notification('notificationStorageCopied'));
       break;
     }
     case 'delete':
