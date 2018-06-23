@@ -3,6 +3,7 @@ const bookmarkAddId = 'bookmark-add';
 const textReducer = (carry, item) => `${carry + item.url}\n`;
 const markdownReducer = (carry, item) => `${carry}[${item.title}](${item.url})\n`;
 const htmlReducer = (carry, item) => `${carry}<a href="${item.url}">${item.title}</a><br/>\n`;
+const dokuwikiReducer = (carry, item) => `${carry}[[${item.url}|${item.title}]]\n`;
 let downloadId = 0;
 
 function notification(message) {
@@ -52,6 +53,12 @@ function getDownloadOptions(format) {
         reducer: htmlReducer,
         filename: 'linkdump.html',
         type: 'text/html'
+      };
+    case 'dokuwiki':
+      return {
+        reducer: dokuwikiReducer,
+        filename: 'linkdump.dk',
+        type: 'text/plain'
       };
     default:
       return {
