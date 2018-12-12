@@ -4,6 +4,7 @@ const textReducer = (carry, item) => `${carry + item.url}\n`;
 const markdownReducer = (carry, item) => `${carry}[${item.title}](${item.url})\n`;
 const htmlReducer = (carry, item) => `${carry}<a href="${item.url}">${item.title}</a><br/>\n`;
 const dokuwikiReducer = (carry, item) => `${carry}[[${item.url}|${item.title}]]\n`;
+const phpbbReducer = (carry, item) => `${carry}[url=${item.url}]${item.title}[/url]\n`;
 let downloadId = 0;
 
 function notification(message) {
@@ -58,6 +59,12 @@ function getDownloadOptions(format) {
       return {
         reducer: dokuwikiReducer,
         filename: 'linkdump.dk',
+        type: 'text/plain'
+      };
+    case 'phpbb':
+      return {
+        reducer: phpbbReducer,
+        filename: 'linkdump.bb',
         type: 'text/plain'
       };
     default:

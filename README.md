@@ -54,4 +54,6 @@ wget -i linkdump.txt
 ```
 
 If you want to add a list of links in your blog, you can dump links in a markdown
-file and use that file as a starting point for your post.
+or html file and use that file as a starting point for your post.
+If you want to share links on a phpBB forum, you can dump links in the appropriated
+format.
