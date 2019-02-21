@@ -8,7 +8,12 @@ On [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/linkdump).
 
 Linkdump is a Firefox extension which allows you to store links, URL, and bookmarks
 in the local storage until you are ready to dump them in a file or copy them in the
-clipboard. At the moment, raw text files, markdown files, and HTML files are supported.
+clipboard. At the moment, the following link formats are supported:
+- text
+- markdown
+- HTML
+- dokuwiki
+- phpbb.
 
 ## How do I add entries in the storage?
 
@@ -18,6 +23,8 @@ following are available:
 available in the address bar.
 1. Link are added by clicking the ![Linkdump icon](icons/linkdump-16.png) icon
 available in the link context menu.
+1. Image source are added by clicking the ![Linkdump icon](icons/linkdump-16.png)
+icon available in the image context menu.
 1. Bookmarks are added by clicking the ![Linkdump icon](icons/linkdump-16.png)
 icon available in the bookmark context menu
 1. Bookmark folders are added recursively by clicking the

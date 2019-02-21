@@ -174,7 +174,7 @@ function handleMessage(message) {
 browser.menus.create({
   id: linkAddId,
   title: browser.i18n.getMessage('menuAddToDump'),
-  contexts: ['link']
+  contexts: ['link', 'image']
 });
 
 browser.menus.create({
@@ -186,7 +186,11 @@ browser.menus.create({
 browser.menus.onClicked.addListener(info => {
   switch (info.menuItemId) {
     case linkAddId:
-      addLink({ url: info.linkUrl, title: info.linkText});
+      if (info.linkUrl != undefined) {
+        addLink({ url: info.linkUrl, title: info.linkText});
+      } else {
+        addLink({ url: info.srcUrl, title: info.srcUrl});
+      }
       break;
     case bookmarkAddId:
       addBookmark(info.bookmarkId);
