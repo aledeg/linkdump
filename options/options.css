@@ -1,0 +1,20 @@
+body {
+  font: 16px sans-serif;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0.5rem 0;
+}
+label, input {
+  cursor: pointer;
+}
+legend {
+  padding: 0 0.5rem;
+}
+fieldset {
+  margin-bottom: 1.5rem;
+}
+input {
+  margin-right: 1rem;
+}
