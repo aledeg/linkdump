@@ -21,24 +21,27 @@ async function addLink(link) {
   const obj = await browser.storage.local.get('urls');
   const urls = obj.urls || [];
   urls.push(link);
-  await browser.storage.local.set({ urls });
+  await browser.storage.local.set({ "urls": urls.flat() });
+}
+
+function getLinks(bookmark, initialLinks = []) {
+  let links = [...initialLinks];
+
+  if (bookmark.url) {
+    links.push({ url: bookmark.url, title: bookmark.title});
+  }
+  else if (bookmark.children) {
+    for (var child of bookmark.children) {
+      links = getLinks(child, links);
+    }
+  }
+
+  return links;
 }
 
 async function addBookmark(id) {
-  const bookmarks = await browser.bookmarks.get(id);
-  for (const bookmark of bookmarks) {
-    switch (bookmark.type) {
-      case 'bookmark':
-        await addLink({ url: bookmark.url, title: bookmark.title});
-        break;
-      case 'folder':
-        const children = await browser.bookmarks.getChildren(bookmark.id);
-        addBookmark(children.map(obj => obj.id));
-        break;
-      default:
-        // Do nothing on purpose
-    }
-  }
+  const [root] = await browser.bookmarks.getSubTree(id);
+  await addLink(getLinks(root));
 }
 
 function getDownloadOptions(format) {
