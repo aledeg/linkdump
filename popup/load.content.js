@@ -31,11 +31,11 @@ function drawContent() {
     item.textContent = browser.i18n.getMessage(`popupButtonAction${action}`);
   });
   browser.storage.local.get('options').then(obj => {
-    if (obj.options.defaultFormat) {
+    if (obj.options != undefined && obj.options.defaultFormat) {
       const target = document.querySelector(`[name="formats"][data-format="${obj.options.defaultFormat}"]`);
       formatSelect(target, obj.options.defaultFormat);
     }
-    if (obj.options.clearAfterDownload) {
+    if (obj.options != undefined && obj.options.clearAfterDownload) {
       document.querySelector('[data-action="download"]').dataset.clear = true;
     }
   });
