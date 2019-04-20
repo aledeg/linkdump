@@ -118,9 +118,7 @@ function deleteLink(link) {
 
     urls = urls.filter((item) => item.url != link.url && item.title != link.title);
 
-    browser.storage.local.set({ urls }).then(browser.runtime.sendMessage({
-      action: 'reload'
-    }));
+    browser.storage.local.set({ urls });
   });
 }
 

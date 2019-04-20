@@ -6,6 +6,7 @@ function deleteItem(event) {
       title: event.target.nextSibling.text
     }
   });
+  event.target.parentNode.remove();
 }
 
 function formatSelect(target, format) {
