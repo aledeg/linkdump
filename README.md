@@ -64,3 +64,8 @@ If you want to add a list of links in your blog, you can dump links in a markdow
 or html file and use that file as a starting point for your post.
 If you want to share links on a phpBB forum, you can dump links in the appropriated
 format.
+
+## Attributions
+
+Icons are part of [Font Awesome](https://fontawesome.com/). They are used under the [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/) agreement.  
+CSS is managed with [Bootstrap](https://getbootstrap.com/). It is used under the [MIT Licence](https://github.com/twbs/bootstrap/blob/master/LICENSE) agreement.
