@@ -7,7 +7,7 @@
 
   "manifest_version": 2,
   "name": "LinkDump",
-  "version": "1.11",
+  "version": "1.12",
   "description": "__MSG_extensionDescription__",
   "icons": {
     "48": "icons/linkdump-48.png"

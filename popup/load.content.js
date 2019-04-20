@@ -1,12 +1,21 @@
 function deleteItem(event) {
+  const target = event.target;
+  const link = target.nextSibling;
+  const container = target.parentNode;
+  const root = container.parentNode;
+
   browser.runtime.sendMessage({
     action: 'delete',
     payload: {
-      url: event.target.nextSibling.href,
-      title: event.target.nextSibling.text
+      url: link.href,
+      title: link.text
     }
   });
-  event.target.parentNode.remove();
+
+  container.remove();
+  if (0 === root.childNodes.length) {
+    window.close();
+  }
 }
 
 function formatSelect(target, format) {
