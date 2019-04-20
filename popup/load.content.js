@@ -34,7 +34,6 @@ function formatSelect(target, format) {
 
 function drawContent() {
   document.querySelector('#clear').textContent = browser.i18n.getMessage('popupButtonActionClear');
-  document.querySelector('#popup-content').innerHTML = '';
   document.querySelectorAll('[data-action]').forEach(item => {
     const action = item.dataset.action[0].toUpperCase() + item.dataset.action.slice(1);
     item.textContent = browser.i18n.getMessage(`popupButtonAction${action}`);
