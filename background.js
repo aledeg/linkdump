@@ -111,17 +111,17 @@ function download(downloadOptions) {
   });
 }
 
-function deleteLink(index) {
+function deleteLink(link) {
   browser.storage.local.get('urls').then(obj => {
     if (!obj.urls) return;
-    const { urls } = obj;
+    let { urls } = obj;
 
-    urls.splice(index, 1);
+    urls = urls.filter((item) => item.url != link.url && item.title != link.title);
 
-    browser.storage.local.set({ urls });
-  }).then(browser.runtime.sendMessage({
-    action: 'reload'
-  }));
+    browser.storage.local.set({ urls }).then(browser.runtime.sendMessage({
+      action: 'reload'
+    }));
+  });
 }
 
 function clear() {

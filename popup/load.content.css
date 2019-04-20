@@ -24,9 +24,8 @@ div.btn-group {
   background-color: transparent;
   border: none;
   cursor: pointer;
-}
-.delete img {
   height: 16px;
+  padding-right: 4px;
 }
 .empty {
   display: none;

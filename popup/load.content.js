@@ -1,7 +1,10 @@
 function deleteItem(event) {
   browser.runtime.sendMessage({
     action: 'delete',
-    payload: event.target.dataset.index
+    payload: {
+      url: event.target.nextSibling.href,
+      title: event.target.nextSibling.text
+    }
   });
 }
 
@@ -43,15 +46,12 @@ function drawContent() {
         const itemLink = document.createElement('a');
         itemLink.href = item.url;
         itemLink.textContent = item.title;
-        const itemDelete = document.createElement('button');
-        itemDelete.dataset.index = index;
-        itemDelete.onclick = deleteItem;
-        itemDelete.classList = 'delete'
         const deleteImage = document.createElement('img');
         deleteImage.src = browser.extension.getURL('icons/trash-48.png');
-        itemDelete.appendChild(deleteImage);
+        deleteImage.onclick = deleteItem;
+        deleteImage.classList = 'delete';
 
-        listItem.appendChild(itemDelete);
+        listItem.appendChild(deleteImage);
         listItem.appendChild(itemLink);
 
         document.querySelector('#popup-content').appendChild(listItem);
