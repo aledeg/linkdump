@@ -1,19 +1,15 @@
-function deleteItem(event) {
-  const target = event.target;
-  const link = target.nextSibling;
+function deleteItem({target}) {
+  const {href, text} = target.nextSibling;
   const container = target.parentNode;
   const root = container.parentNode;
 
   browser.runtime.sendMessage({
     action: 'delete',
-    payload: {
-      url: link.href,
-      title: link.text
-    }
+    payload: {url: href, title: text}
   });
 
   container.remove();
-  if (0 === root.childNodes.length) {
+  if (root.childNodes.length === 0) {
     window.close();
   }
 }
@@ -27,6 +23,7 @@ function formatSelect(target, format) {
     };
   });
   document.querySelectorAll('[data-action]').forEach(current => {
+    // eslint-disable-next-line no-param-reassign
     current.dataset.format = format;
   });
 }
@@ -36,21 +33,22 @@ function drawContent() {
   document.querySelector('#clear').textContent = browser.i18n.getMessage('popupButtonActionClear');
   document.querySelectorAll('[data-action]').forEach(item => {
     const action = item.dataset.action[0].toUpperCase() + item.dataset.action.slice(1);
+    // eslint-disable-next-line no-param-reassign
     item.textContent = browser.i18n.getMessage(`popupButtonAction${action}`);
   });
   browser.storage.local.get('options').then(obj => {
-    if (obj.options != undefined && obj.options.defaultFormat) {
+    if (obj.options !== undefined && obj.options.defaultFormat) {
       const target = document.querySelector(`[name="formats"][data-format="${obj.options.defaultFormat}"]`);
       formatSelect(target, obj.options.defaultFormat);
     }
-    if (obj.options != undefined && obj.options.clearAfterDownload) {
+    if (obj.options !== undefined && obj.options.clearAfterDownload) {
       document.querySelector('[data-action="download"]').dataset.clear = true;
     }
   });
 
   browser.storage.local.get('urls').then(obj => {
     if (obj.urls && obj.urls.length !== 0) {
-      obj.urls.forEach((item, index) => {
+      obj.urls.forEach((item) => {
         const listItem = document.createElement('p');
         const itemLink = document.createElement('a');
         itemLink.href = item.url;

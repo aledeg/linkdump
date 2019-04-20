@@ -31,9 +31,9 @@ function getLinks(bookmark, initialLinks = []) {
     links.push({ url: bookmark.url, title: bookmark.title});
   }
   else if (bookmark.children) {
-    for (var child of bookmark.children) {
+    bookmark.children.forEach(child => {
       links = getLinks(child, links);
-    }
+    });
   }
 
   return links;
@@ -116,7 +116,7 @@ function deleteLink(link) {
     if (!obj.urls) return;
     let { urls } = obj;
 
-    urls = urls.filter((item) => item.url != link.url && item.title != link.title);
+    urls = urls.filter((item) => item.url !== link.url && item.title !== link.title);
 
     browser.storage.local.set({ urls });
   });
@@ -187,7 +187,7 @@ browser.menus.create({
 browser.menus.onClicked.addListener(info => {
   switch (info.menuItemId) {
     case linkAddId:
-      if (info.linkUrl != undefined) {
+      if (info.linkUrl !== undefined) {
         addLink({ url: info.linkUrl, title: info.linkText});
       } else {
         addLink({ url: info.srcUrl, title: info.srcUrl});
