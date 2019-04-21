@@ -5,33 +5,21 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="options.css"/>
   </head>
-
-<body>
-  <form>
-    <fieldset>
-      <legend for="defaultFormat">Default format</legend>
-      <ul>
-        <li><label><input type="radio" name="defaultFormat" value="text">Text</label></li>
-        <li><label><input type="radio" name="defaultFormat" value="markdown">Markdown</label></li>
-        <li><label><input type="radio" name="defaultFormat" value="html">HTML</label></li>
-        <li><label><input type="radio" name="defaultFormat" value="dokuwiki">Dokuwiki</label></li>
-        <li><label><input type="radio" name="defaultFormat" value="phpbb">phpBB</label></li>
-      </ul>
-    </fieldset>
-    <table>
-      <tbody>
-        <tr>
-          <td><label for="clearAfterDownload">Clear after download</label></td>
-          <td><input type="checkbox" name="clearAfterDownload" id="clearAfterDownload"></td>
-        </tr>
-        <tr>
-          <td><label for="clearAfterCopy">Clear after copy</label></td>
-          <td><input type="checkbox" name="clearAfterCopy" id="clearAfterCopy"></td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
-  <script src="options.js"></script>
-</body>
-
+  <body>
+    <form>
+      <table>
+        <tbody>
+          <tr>
+            <td><label for="clearAfterDownload">Clear after download</label></td>
+            <td><input type="checkbox" name="clearAfterDownload" id="clearAfterDownload"></td>
+          </tr>
+          <tr>
+            <td><label for="clearAfterCopy">Clear after copy</label></td>
+            <td><input type="checkbox" name="clearAfterCopy" id="clearAfterCopy"></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+    <script src="options.js"></script>
+  </body>
 </html>

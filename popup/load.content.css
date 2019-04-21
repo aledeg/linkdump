@@ -1,32 +1,92 @@
+:root {
+  --button-size: 32px;
+  --color: #007bc5;
+}
+
+body {
+  display: flex;
+  flex-direction: row;
+  font-size: 0.75rem;
+  margin: 0;
+  padding: 0;
+  width: 600px;
+  overflow-x: hidden;
+}
+img {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/********/
+/* Menu */
+/********/
+nav {
+  width: calc(var(--button-size) + 10px);
+  border-right: 1px solid var(--color);
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  position: relative;
+}
+ul ul {
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  border: 1px solid var(--color);
+}
+li:hover > ul {
+  left: 100%;
+  visibility: visible;
+}
+nav img {
+  height: var(--button-size);
+  width: var(--button-size);
+  padding: 5px;
+}
+ul > li:hover {
+  background-color: var(--color);
+}
+ul a {
+  padding: 5px;
+  text-decoration: none;
+  display: block;
+  background-color: white;
+}
+ul a:hover {
+  background-color: var(--color);
+  color: white;
+}
+
+/***********/
+/* Content */
+/***********/
+#popup-content {
+  flex: auto;
+  margin: 0.5rem;
+  overflow: hidden;
+}
+#popup-content:empty::after {
+  content: attr(data-empty);
+}
 p {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0.1rem;
+  margin: 0.1rem 0;
 }
-body {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  font-size: 0.75rem;
-}
-div {
-  margin: 0 0.5rem 0.5rem;
-}
-div.btn-group {
-  margin-right: 0;
-}
-#popup-content {
-  width: 100%;
-  margin-top: 0.5rem;
+a {
+  color: var(--color);
 }
 .delete {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
   height: 16px;
   padding-right: 4px;
 }
-.empty {
+
+.hidden {
   display: none;
 }

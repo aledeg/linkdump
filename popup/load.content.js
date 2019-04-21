@@ -14,64 +14,56 @@ function deleteItem({target}) {
   }
 }
 
-function formatSelect(target, format) {
-  document.querySelectorAll('[name="formats"]').forEach(current => {
-    if (current === target) {
-      current.parentNode.classList.add('active');
-    } else {
-      current.parentNode.classList.remove('active');
-    };
-  });
-  document.querySelectorAll('[data-action]').forEach(current => {
-    // eslint-disable-next-line no-param-reassign
-    current.dataset.format = format;
-  });
-}
-
-
-function drawContent() {
-  document.querySelector('#clear').textContent = browser.i18n.getMessage('popupButtonActionClear');
+function translateContent() {
+  // Translate empty content
+  document.querySelector('#popup-content').dataset.empty = browser.i18n.getMessage('popupContentEmpty');
+  // Translate actions
   document.querySelectorAll('[data-action]').forEach(item => {
     const action = item.dataset.action[0].toUpperCase() + item.dataset.action.slice(1);
     // eslint-disable-next-line no-param-reassign
-    item.textContent = browser.i18n.getMessage(`popupButtonAction${action}`);
+    item.title = browser.i18n.getMessage(`popupButtonAction${action}`);
   });
+}
+
+function configureContent() {
   browser.storage.local.get('options').then(obj => {
-    if (obj.options !== undefined && obj.options.defaultFormat) {
-      const target = document.querySelector(`[name="formats"][data-format="${obj.options.defaultFormat}"]`);
-      formatSelect(target, obj.options.defaultFormat);
-    }
     if (obj.options !== undefined && obj.options.clearAfterDownload) {
       document.querySelector('[data-action="download"]').dataset.clear = true;
     }
   });
+}
 
+function drawHiddenContent() {
+  document.querySelectorAll('.hidden').forEach(item => {
+    item.classList.remove('hidden');
+  });
+}
+
+function drawContentLinks(obj) {
+  obj.urls.forEach((item) => {
+    const listItem = document.createElement('p');
+    const itemLink = document.createElement('a');
+    itemLink.href = item.url;
+    itemLink.textContent = item.title;
+    const deleteImage = document.createElement('img');
+    deleteImage.src = browser.extension.getURL('icons/trash-48.png');
+    deleteImage.onclick = deleteItem;
+    deleteImage.classList = 'delete';
+
+    listItem.appendChild(deleteImage);
+    listItem.appendChild(itemLink);
+
+    document.querySelector('#popup-content').appendChild(listItem);
+  });
+}
+
+function drawContent() {
   browser.storage.local.get('urls').then(obj => {
-    if (obj.urls && obj.urls.length !== 0) {
-      obj.urls.forEach((item) => {
-        const listItem = document.createElement('p');
-        const itemLink = document.createElement('a');
-        itemLink.href = item.url;
-        itemLink.textContent = item.title;
-        const deleteImage = document.createElement('img');
-        deleteImage.src = browser.extension.getURL('icons/trash-48.png');
-        deleteImage.onclick = deleteItem;
-        deleteImage.classList = 'delete';
-
-        listItem.appendChild(deleteImage);
-        listItem.appendChild(itemLink);
-
-        document.querySelector('#popup-content').appendChild(listItem);
-      });
-    } else {
-      const emptyItem = document.createElement('p');
-      emptyItem.textContent = browser.i18n.getMessage('popupContentEmpty');
-      document.querySelector('#popup-content').appendChild(emptyItem);
-      document.querySelectorAll('div').forEach(item => {
-        if (item.id !== 'popup-content') {
-          item.classList.add('empty');
-        }
-      });
+    translateContent();
+    configureContent();
+    if (obj.urls !== undefined && obj.urls.length !== 0) {
+      drawHiddenContent();
+      drawContentLinks(obj);
     }
   });
 }
@@ -88,25 +80,19 @@ function copyToClipboard(content) {
   }).then(window.close());
 }
 
-document.querySelectorAll('[data-action]').forEach(item => {
-  item.addEventListener('click', (event) => {
-    browser.runtime.sendMessage({
-      action: event.target.dataset.action,
-      payload: event.target.dataset.format
-    });
-  });
-});
-
-document.querySelectorAll('[name="formats"]').forEach(item => {
-  item.addEventListener('click', (event) => {
-    formatSelect(event.target, event.target.dataset.format);
-  });
-});
-
-document.querySelector('#clear').addEventListener('click', () => {
+document.querySelector('[data-action="clear"]').addEventListener('click', () => {
   browser.runtime.sendMessage({
     action: 'clear'
   }).then(window.close());
+});
+
+document.querySelectorAll('[data-format]').forEach(item => {
+  item.addEventListener('click', ({target}) => {
+    browser.runtime.sendMessage({
+      action: document.querySelector('li:hover img').dataset.action,
+      payload: target.dataset.format
+    });
+  });
 });
 
 function handleMessage(message) {

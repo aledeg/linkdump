@@ -68,4 +68,3 @@ format.
 ## Attributions
 
 Icons are part of [Font Awesome](https://fontawesome.com/). They are used under the [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/) agreement.  
-CSS is managed with [Bootstrap](https://getbootstrap.com/). It is used under the [MIT Licence](https://github.com/twbs/bootstrap/blob/master/LICENSE) agreement.

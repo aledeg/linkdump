@@ -3,37 +3,35 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="bootstrap.min.css"/>
     <link rel="stylesheet" href="load.content.css"/>
   </head>
-
-<body>
-  <div id="popup-content"></div>
-  <div class="btn-group" role="group" aria-label="Action">
-    <button type="button" class="btn btn-sm btn-primary" data-action="download" data-format="text"></button>
-    <button type="button" class="btn btn-sm btn-primary" data-action="copy" data-format="text"></button>
-  </div>
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-secondary btn-sm active">
-      <input type="radio" name="formats" id="text" autocomplete="off" data-format="text" checked> Text
-    </label>
-    <label class="btn btn-secondary btn-sm">
-      <input type="radio" name="formats" id="markdown" autocomplete="off" data-format="markdown"> Markdown
-    </label>
-    <label class="btn btn-secondary btn-sm">
-      <input type="radio" name="formats" id="html" autocomplete="off" data-format="html"> HTML
-    </label>
-    <label class="btn btn-secondary btn-sm">
-      <input type="radio" name="formats" id="dokuwiki" autocomplete="off" data-format="dokuwiki"> Dokuwiki
-    </label>
-    <label class="btn btn-secondary btn-sm">
-      <input type="radio" name="formats" id="phpbb" autocomplete="off" data-format="phpbb"> PhpBB
-    </label>
-  </div>
-  <div>
-    <button id="clear" class="btn btn-outline-primary btn-sm"></button>
-  </div>
-  <script src="load.content.js"></script>
-</body>
-
+  <body>
+    <nav class="hidden">
+      <ul>
+        <li>
+          <img data-action="download" src="../icons/download-48.png"/>
+          <ul>
+            <li><a data-format="text" href="#">Text</a></li>
+            <li><a data-format="markdown" href="#">Markdown</a></li>
+            <li><a data-format="html" href="#">HTML</a></li>
+            <li><a data-format="dokuwiki" href="#">Dokuwiki</a></li>
+            <li><a data-format="phpbb" href="#">PhpBB</a></li>
+          </ul>
+        </li>
+        <li>
+          <img data-action="copy" src="../icons/copy-48.png" />
+          <ul>
+            <li><a data-format="text" href="#">Text</a></li>
+            <li><a data-format="markdown" href="#">Markdown</a></li>
+            <li><a data-format="html" href="#">HTML</a></li>
+            <li><a data-format="dokuwiki" href="#">Dokuwiki</a></li>
+            <li><a data-format="phpbb" href="#">PhpBB</a></li>
+          </ul>
+        </li>
+        <li><img data-action="clear" src="../icons/trash-48.png"/></li>
+      </ul>
+    </nav>
+    <section id="popup-content"></section>
+    <script src="load.content.js"></script>
+  </body>
 </html>
