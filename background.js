@@ -134,7 +134,7 @@ function handleChanged(delta) {
   }
   if (delta.state && delta.state.current === 'complete') {
     browser.storage.local.get('options').then(obj => {
-      if (obj.options.clearAfterDownload) {
+      if (obj.options !== undefined && obj.options.clearAfterDownload) {
         browser.storage.local.remove('urls');
       }
     }).then(notification('notificationDownloadComplete'));
@@ -155,7 +155,7 @@ function handleMessage(message) {
     }
     case 'copied': {
       browser.storage.local.get('options').then(obj => {
-        if (obj.options.clearAfterCopy) {
+        if (obj.options !== obj.options.clearAfterCopy) {
           browser.storage.local.remove('urls');
         }
       }).then(notification('notificationStorageCopied'));
