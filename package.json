@@ -18,13 +18,15 @@
     "url": "https://github.com/aledeg/linkdump/issues"
   },
   "homepage": "https://github.com/aledeg/linkdump#readme",
-  "browserslist": ["defaults"],
+  "browserslist": [
+    "defaults"
+  ],
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-compat": "^2.2.0",
-    "eslint-plugin-import": "^2.11.0",
-    "prettier": "^1.12.1"
+    "eslint-config-prettier": "^2.10.0",
+    "eslint-plugin-compat": "^2.7.0",
+    "eslint-plugin-import": "^2.17.2",
+    "prettier": "^1.17.0"
   }
 }
