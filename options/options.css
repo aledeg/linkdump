@@ -1,9 +1,72 @@
+:root {
+  --active-color: #007bc5;
+  --inactive-color: #ccc;
+  --slider-color: #fff;
+  --slider-size: 26px;
+  --slider-spacing: 4px;
+  --switch-height: calc(var(--slider-size) + var(--slider-spacing) * 2);
+  --switch-width: calc((var(--slider-size) + var(--slider-spacing)) * 2);
+}
 body {
-  font: 16px sans-serif;
+  font: 18px sans-serif;
 }
-label, input {
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+thead th {
+  border-bottom: 1px solid var(--inactive-color);
+}
+tfoot td {
+  border-top: 1px solid var(--inactive-color);
+}
+th, td {
+  text-align: left;
+  padding: 5px 0;
+}
+
+/* Switches */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: var(--switch-width);
+  height: var(--switch-height);
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.slider {
+  position: absolute;
   cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--inactive-color);
+  transition: .4s;
+  border-radius: var(--switch-height);
 }
-input {
-  margin-right: 1rem;
+.slider:before {
+  position: absolute;
+  content: "";
+  height: var(--slider-size);
+  width: var(--slider-size);
+  left: var(--slider-spacing);
+  bottom: var(--slider-spacing);
+  background-color: var(--slider-color);
+  transition: .4s;
+  border-radius: 50%;
+}
+input:checked + .slider {
+  background-color: var(--active-color);
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--active-color);
+}
+input:checked + .slider:before {
+  transform: translateX(var(--slider-size));
 }

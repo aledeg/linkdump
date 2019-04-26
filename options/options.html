@@ -8,16 +8,47 @@
   <body>
     <form>
       <table>
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th><label for="downloadAction">Download</label></th>
+            <th><label for="copyAction">Copy</label></th>
+          </tr>
+        </thead>
         <tbody>
           <tr>
-            <td><label for="clearAfterDownload">Clear after download</label></td>
-            <td><input type="checkbox" name="clearAfterDownload" id="clearAfterDownload"></td>
+            <th>Text</th>
+            <td><label class="switch"><input type="checkbox" checked="checked" data-action="download" data-format="text"><span class="slider"></span></label></td>
+            <td><label class="switch"><input type="checkbox" checked="checked" data-action="copy" data-format="text"><span class="slider"></span></label></td>
           </tr>
           <tr>
-            <td><label for="clearAfterCopy">Clear after copy</label></td>
-            <td><input type="checkbox" name="clearAfterCopy" id="clearAfterCopy"></td>
+            <th>Markdown</th>
+            <td><label class="switch"><input type="checkbox" checked="checked" data-action="download" data-format="markdown"><span class="slider"></span></label></td>
+            <td><label class="switch"><input type="checkbox" checked="checked" data-action="copy" data-format="markdown"><span class="slider"></span></label></td>
+          </tr>
+          <tr>
+            <th>HTML</th>
+            <td><label class="switch"><input type="checkbox" checked="checked" data-action="download" data-format="html"><span class="slider"></span></label></td>
+            <td><label class="switch"><input type="checkbox" checked="checked" data-action="copy" data-format="html"><span class="slider"></span></label></td>
+          </tr>
+          <tr>
+            <th>Dokuwiki</th>
+            <td><label class="switch"><input type="checkbox" checked="checked" data-action="download" data-format="dokuwiki"><span class="slider"></span></label></td>
+            <td><label class="switch"><input type="checkbox" checked="checked" data-action="copy" data-format="dokuwiki"><span class="slider"></span></label></td>
+          </tr>
+          <tr>
+            <th>PhpBB</th>
+            <td><label class="switch"><input type="checkbox" checked="checked" data-action="download" data-format="phpbb"><span class="slider"></span></label></td>
+            <td><label class="switch"><input type="checkbox" checked="checked" data-action="copy" data-format="phpbb"><span class="slider"></span></label></td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <td><label for="clearAfter">Clear dump after</label></td>
+            <td><label class="switch"><input type="checkbox" data-action="clear" data-format="download"><span class="slider"></span></label></td>
+            <td><label class="switch"><input type="checkbox" data-action="clear" data-format="copy"><span class="slider"></span></label></td>
+          </tr>
+        </tfoot>
       </table>
     </form>
     <script src="options.js"></script>

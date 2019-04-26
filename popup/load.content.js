@@ -25,14 +25,6 @@ function translateContent() {
   });
 }
 
-function configureContent() {
-  browser.storage.local.get('options').then(obj => {
-    if (obj.options !== undefined && obj.options.clearAfterDownload) {
-      document.querySelector('[data-action="download"]').dataset.clear = true;
-    }
-  });
-}
-
 function drawHiddenContent() {
   document.querySelectorAll('.hidden').forEach(item => {
     item.classList.remove('hidden');
@@ -60,7 +52,6 @@ function drawContentLinks(obj) {
 function drawContent() {
   browser.storage.local.get('urls').then(obj => {
     translateContent();
-    configureContent();
     if (obj.urls !== undefined && obj.urls.length !== 0) {
       drawHiddenContent();
       drawContentLinks(obj);
