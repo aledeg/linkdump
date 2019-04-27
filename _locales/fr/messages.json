@@ -20,8 +20,16 @@
     "description": "Notify the user that the storage has been copied to the clipboard."
   },
   "optionsClearAfter": {
-    "message": "Nettoyer l'entrepôt après :",
+    "message": "Nettoyer l'entrepôt après",
     "description": "Label for the option to select if the dump is cleared after an action on it."
+  },
+  "optionsSortDump": {
+    "message": "Trier les liens",
+    "description": "Label for the option to select if dump entries are sorted."
+  },
+  "optionsUniqueDump": {
+    "message": "Supprimer les doublons",
+    "description": "Label for the option to select if dump entries are unique."
   },
   "popupButtonActionClear": {
     "message": "Nettoyer l'entrepôt",

@@ -20,8 +20,16 @@
     "description": "Notify the user that the storage has been copied to the clipboard."
   },
   "optionsClearAfter": {
-    "message": "Clear dump after:",
+    "message": "Clear dump after",
     "description": "Label for the option to select if the dump is cleared after an action on it."
+  },
+  "optionsSortDump": {
+    "message": "Sort entries",
+    "description": "Label for the option to select if dump entries are sorted."
+  },
+  "optionsUniqueDump": {
+    "message": "Remove duplicate entries",
+    "description": "Label for the option to select if dump entries are unique."
   },
   "popupButtonActionClear": {
     "message": "Clear dump",

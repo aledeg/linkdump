@@ -32,7 +32,7 @@ function drawHiddenContent() {
   browser.storage.local.get('options').then(obj => {
     if (obj.options !== undefined) {
       Object.entries(obj.options).forEach(([action, formats]) => {
-        if (action === 'clear') {
+        if (action !== 'download' && action !== 'copy') {
           return;
         }
         Object.entries(formats).forEach(([format, value]) => {

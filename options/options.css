@@ -16,11 +16,13 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
-thead th {
-  border-bottom: 1px solid var(--inactive-color);
-}
-tfoot td {
+tbody tr:first-child th,
+tbody tr:first-child td,
+tbody tr:last-child td {
   border-top: 1px solid var(--inactive-color);
+}
+tfoot tr:first-child td {
+  padding-top: 50px;
 }
 th, td {
   text-align: left;

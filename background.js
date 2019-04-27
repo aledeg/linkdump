@@ -18,9 +18,22 @@ function notification(message) {
 }
 
 async function addLink(link) {
-  const obj = await browser.storage.local.get('urls');
-  const urls = obj.urls || [];
+  const storage = await browser.storage.local.get('urls');
+  let urls = storage.urls || [];
   urls.push(link);
+
+  await browser.storage.local.get('options').then(obj => {
+    if (obj.options === undefined || obj.options.other === undefined) {
+      return;
+    }
+    if (obj.options.other.sort) {
+      urls.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    if (obj.options.other.unique) {
+      urls = urls.filter((item, index, self) => self.findIndex(t => t.url === item.url) === index);
+    }
+  })
+
   await browser.storage.local.set({ "urls": urls.flat() });
 }
 

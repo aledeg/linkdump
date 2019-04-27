@@ -29,3 +29,5 @@ browser.storage.local.get('options').then(obj => {
 document.querySelector('[for="downloadAction"]').textContent = browser.i18n.getMessage(`popupButtonActionDownload`);
 document.querySelector('[for="copyAction"]').textContent = browser.i18n.getMessage(`popupButtonActionCopy`);
 document.querySelector('[for="clearAfter"]').textContent = browser.i18n.getMessage(`optionsClearAfter`);
+document.querySelector('[for="sortDump"]').textContent = browser.i18n.getMessage(`optionsSortDump`);
+document.querySelector('[for="uniqueDump"]').textContent = browser.i18n.getMessage(`optionsUniqueDump`);
