@@ -29,6 +29,25 @@ function drawHiddenContent() {
   document.querySelectorAll('.hidden').forEach(item => {
     item.classList.remove('hidden');
   });
+  browser.storage.local.get('options').then(obj => {
+    if (obj.options !== undefined) {
+      Object.entries(obj.options).forEach(([action, formats]) => {
+        if (action === 'clear') {
+          return;
+        }
+        Object.entries(formats).forEach(([format, value]) => {
+          if (!value) {
+            document.querySelector(`[data-action="${action}"][data-format="${format}"]`).parentNode.remove();
+          }
+        });
+      });
+    }
+    document.querySelectorAll('nav ul').forEach(item => {
+      if (item.textContent.trim() === "") {
+        item.parentNode.remove();
+      }
+    });
+  });
 }
 
 function drawContentLinks(obj) {
@@ -80,7 +99,7 @@ document.querySelector('[data-action="clear"]').addEventListener('click', () => 
 document.querySelectorAll('[data-format]').forEach(item => {
   item.addEventListener('click', ({target}) => {
     browser.runtime.sendMessage({
-      action: document.querySelector('li:hover img').dataset.action,
+      action: target.dataset.action,
       payload: target.dataset.format
     });
   });
