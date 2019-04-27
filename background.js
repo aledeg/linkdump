@@ -22,6 +22,8 @@ async function addLink(link) {
   let urls = storage.urls || [];
   urls.push(link);
 
+  urls = urls.flat();
+
   await browser.storage.local.get('options').then(obj => {
     if (obj.options === undefined || obj.options.other === undefined) {
       return;
@@ -34,7 +36,7 @@ async function addLink(link) {
     }
   })
 
-  await browser.storage.local.set({ "urls": urls.flat() });
+  await browser.storage.local.set({ "urls": urls});
 }
 
 function getLinks(bookmark, initialLinks = []) {
