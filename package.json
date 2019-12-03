@@ -1,6 +1,6 @@
 {
   "name": "linkdump",
-  "version": "1.14",
+  "version": "1.15",
   "description": "Store links and dump them",
   "main": "background.js",
   "scripts": {

@@ -11,10 +11,6 @@
     "message": "Téléchargement terminé",
     "description": "Notify the user that the download is complete."
   },
-  "notificationStorageCleared": {
-    "message": "Entrepôt nettoyé",
-    "description": "Notify the user that the storage has been cleared."
-  },
   "notificationStorageCopied": {
     "message": "Entrepôt copié",
     "description": "Notify the user that the storage has been copied to the clipboard."

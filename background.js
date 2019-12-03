@@ -17,6 +17,22 @@ function notification(message) {
       });
 }
 
+async function updateBadge(items) {
+  let count = items;
+
+  if (items === undefined) {
+    const storage = await browser.storage.local.get('urls');
+    const urls = storage.urls || [];
+    count = urls.length || '';
+  } else if (items === 0) {
+    count = '';
+  }
+
+  browser.browserAction.setBadgeText({text: count.toString()});
+  browser.browserAction.setBadgeTextColor({color: 'white'});
+  browser.browserAction.setBadgeBackgroundColor({color: '#007bc5'});
+}
+
 async function addLink(link) {
   const storage = await browser.storage.local.get('urls');
   let urls = storage.urls || [];
@@ -36,7 +52,8 @@ async function addLink(link) {
     }
   })
 
-  await browser.storage.local.set({ "urls": urls});
+  await browser.storage.local.set({ urls });
+  await updateBadge(urls.length);
 }
 
 function getLinks(bookmark, initialLinks = []) {
@@ -142,21 +159,20 @@ function download(downloadOptions) {
   });
 }
 
-function deleteLink(link) {
-  browser.storage.local.get('urls').then(obj => {
-    if (!obj.urls) return;
-    let { urls } = obj;
+async function deleteLink(link) {
+  const obj = await browser.storage.local.get('urls');
+  if (!obj.urls) return;
+  let { urls } = obj;
 
-    urls = urls.filter((item) => item.url !== link.url && item.title !== link.title);
+  urls = urls.filter((item) => item.url !== link.url && item.title !== link.title);
 
-    browser.storage.local.set({ urls });
-  });
+  await browser.storage.local.set({ urls });
+  await updateBadge(urls.length);
 }
 
-function clear() {
-  browser.storage.local.remove('urls').then(
-    notification('notificationStorageCleared')
-  );
+async function clear() {
+  await browser.storage.local.remove('urls');
+  await updateBadge(0);
 }
 
 function handleChanged(delta) {
@@ -164,9 +180,10 @@ function handleChanged(delta) {
     return;
   }
   if (delta.state && delta.state.current === 'complete') {
-    browser.storage.local.get('options').then(obj => {
+    browser.storage.local.get('options').then(async obj => {
       if (obj.options !== undefined && obj.options.clear !== undefined && obj.options.clear.download) {
-        browser.storage.local.remove('urls');
+        await browser.storage.local.remove('urls');
+        await updateBadge(0);
       }
     }).then(notification('notificationDownloadComplete'));
   }
@@ -185,9 +202,10 @@ function handleMessage(message) {
       break;
     }
     case 'copied': {
-      browser.storage.local.get('options').then(obj => {
+      browser.storage.local.get('options').then(async obj => {
         if (obj.options !== undefined && obj.options.clear !== undefined && obj.options.clear.copy) {
-          browser.storage.local.remove('urls');
+          await browser.storage.local.remove('urls');
+          await updateBadge(0);
         }
       }).then(notification('notificationStorageCopied'));
       break;
@@ -239,3 +257,5 @@ browser.pageAction.onClicked.addListener(tab => {
 browser.downloads.onChanged.addListener(handleChanged);
 
 browser.runtime.onMessage.addListener(handleMessage);
+
+updateBadge();
