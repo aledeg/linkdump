@@ -102,12 +102,6 @@ function getDownloadOptions(format) {
         filename: 'linkdump.bb',
         type: 'text/plain'
       };
-    case 'json':
-      return {
-        filename: 'linkdump.json',
-        type: 'application/json',
-        transformer: JSON.stringify
-      };
     default:
       return {
         reducer: textReducer,
@@ -121,12 +115,7 @@ function copy(downloadOptions) {
   browser.storage.local.get('urls').then(obj => {
     if (!obj.urls) return;
 
-    let content;
-    if (downloadOptions.reducer) {
-      content = obj.urls.reduce(downloadOptions.reducer, '');
-    } else {
-      content = downloadOptions.transformer(obj.urls);
-    }
+    const content = obj.urls.reduce(downloadOptions.reducer, '');
 
     browser.runtime.sendMessage({
       action: 'copy',
@@ -139,12 +128,7 @@ function download(downloadOptions) {
   browser.storage.local.get('urls').then(obj => {
     if (!obj.urls) return;
 
-    let content;
-    if (downloadOptions.reducer) {
-      content = obj.urls.reduce(downloadOptions.reducer, '');
-    } else {
-      content = downloadOptions.transformer(obj.urls);
-    }
+    const content = obj.urls.reduce(downloadOptions.reducer, '');
     const blob = new Blob([content], { type: downloadOptions.type });
 
     browser.downloads
