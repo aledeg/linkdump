@@ -1,6 +1,6 @@
 {
   "name": "linkdump",
-  "version": "1.16",
+  "version": "1.16.0",
   "description": "Store links and dump them",
   "main": "background.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-config-prettier": "^2.10.0",
     "eslint-plugin-compat": "^2.7.0",
-    "eslint-plugin-import": "^2.18.2",
-    "prettier": "^1.18.2"
+    "eslint-plugin-import": "^2.22.1",
+    "prettier": "^1.19.1"
   }
 }
