@@ -1,11 +1,11 @@
-function deleteItem({target}) {
-  const {href, text} = target.nextSibling;
+function deleteItem({ target }) {
+  const { href, text } = target.nextSibling;
   const container = target.parentNode;
   const root = container.parentNode;
 
   browser.runtime.sendMessage({
     action: 'delete',
-    payload: {url: href, title: text}
+    payload: { url: href, title: text }
   });
 
   container.remove();
@@ -16,10 +16,13 @@ function deleteItem({target}) {
 
 function translateContent() {
   // Translate empty content
-  document.querySelector('#popup-content').dataset.empty = browser.i18n.getMessage('popupContentEmpty');
+  document.querySelector(
+    '#popup-content'
+  ).dataset.empty = browser.i18n.getMessage('popupContentEmpty');
   // Translate actions
   document.querySelectorAll('[data-action]').forEach(item => {
-    const action = item.dataset.action[0].toUpperCase() + item.dataset.action.slice(1);
+    const action =
+      item.dataset.action[0].toUpperCase() + item.dataset.action.slice(1);
     // eslint-disable-next-line no-param-reassign
     item.title = browser.i18n.getMessage(`popupButtonAction${action}`);
   });
@@ -37,13 +40,17 @@ function drawHiddenContent() {
         }
         Object.entries(formats).forEach(([format, value]) => {
           if (!value) {
-            document.querySelector(`[data-action="${action}"][data-format="${format}"]`).parentNode.remove();
+            document
+              .querySelector(
+                `[data-action="${action}"][data-format="${format}"]`
+              )
+              .parentNode.remove();
           }
         });
       });
     }
     document.querySelectorAll('nav ul').forEach(item => {
-      if (item.textContent.trim() === "") {
+      if (item.textContent.trim() === '') {
         item.parentNode.remove();
       }
     });
@@ -51,7 +58,7 @@ function drawHiddenContent() {
 }
 
 function drawContentLinks(obj) {
-  obj.urls.forEach((item) => {
+  obj.urls.forEach(item => {
     const listItem = document.createElement('p');
     const itemLink = document.createElement('a');
     itemLink.href = item.url;
@@ -85,19 +92,25 @@ function copyToClipboard(content) {
   textarea.select();
   document.execCommand('copy');
   document.body.removeChild(textarea);
-  browser.runtime.sendMessage({
-    action: 'copied'
-  }).then(window.close());
+  browser.runtime
+    .sendMessage({
+      action: 'copied'
+    })
+    .then(window.close());
 }
 
-document.querySelector('[data-action="clear"]').addEventListener('click', () => {
-  browser.runtime.sendMessage({
-    action: 'clear'
-  }).then(window.close());
-});
+document
+  .querySelector('[data-action="clear"]')
+  .addEventListener('click', () => {
+    browser.runtime
+      .sendMessage({
+        action: 'clear'
+      })
+      .then(window.close());
+  });
 
 document.querySelectorAll('[data-format]').forEach(item => {
-  item.addEventListener('click', ({target}) => {
+  item.addEventListener('click', ({ target }) => {
     browser.runtime.sendMessage({
       action: target.dataset.action,
       payload: target.dataset.format
@@ -114,7 +127,7 @@ function handleMessage(message) {
       copyToClipboard(message.payload);
       break;
     default:
-      // Do nothing on purpose
+    // Do nothing on purpose
   }
 }
 

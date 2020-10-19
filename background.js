@@ -1,20 +1,23 @@
 const linkAddId = 'link-add';
 const bookmarkAddId = 'bookmark-add';
 const textReducer = (carry, item) => `${carry + item.url}\n`;
-const markdownReducer = (carry, item) => `${carry}[${item.title}](${item.url})\n`;
-const htmlReducer = (carry, item) => `${carry}<a href="${item.url}">${item.title}</a><br/>\n`;
-const dokuwikiReducer = (carry, item) => `${carry}[[${item.url}|${item.title}]]\n`;
-const phpbbReducer = (carry, item) => `${carry}[url=${item.url}]${item.title}[/url]\n`;
+const markdownReducer = (carry, item) =>
+  `${carry}[${item.title}](${item.url})\n`;
+const htmlReducer = (carry, item) =>
+  `${carry}<a href="${item.url}">${item.title}</a><br/>\n`;
+const dokuwikiReducer = (carry, item) =>
+  `${carry}[[${item.url}|${item.title}]]\n`;
+const phpbbReducer = (carry, item) =>
+  `${carry}[url=${item.url}]${item.title}[/url]\n`;
 let downloadId = 0;
 
 function notification(message) {
-  return browser.notifications
-      .create('download-notification', {
-        type: 'basic',
-        iconUrl: browser.extension.getURL('icons/linkdump-48.png'),
-        title: 'Linkdump',
-        message: browser.i18n.getMessage(message)
-      });
+  return browser.notifications.create('download-notification', {
+    type: 'basic',
+    iconUrl: browser.extension.getURL('icons/linkdump-48.png'),
+    title: 'Linkdump',
+    message: browser.i18n.getMessage(message)
+  });
 }
 
 async function updateBadge(items) {
@@ -28,9 +31,9 @@ async function updateBadge(items) {
     count = '';
   }
 
-  browser.browserAction.setBadgeText({text: count.toString()});
-  browser.browserAction.setBadgeTextColor({color: 'white'});
-  browser.browserAction.setBadgeBackgroundColor({color: '#007bc5'});
+  browser.browserAction.setBadgeText({ text: count.toString() });
+  browser.browserAction.setBadgeTextColor({ color: 'white' });
+  browser.browserAction.setBadgeBackgroundColor({ color: '#007bc5' });
 }
 
 async function addLink(link) {
@@ -48,9 +51,11 @@ async function addLink(link) {
       urls.sort((a, b) => a.title.localeCompare(b.title));
     }
     if (obj.options.other.unique) {
-      urls = urls.filter((item, index, self) => self.findIndex(t => t.url === item.url) === index);
+      urls = urls.filter(
+        (item, index, self) => self.findIndex(t => t.url === item.url) === index
+      );
     }
-  })
+  });
 
   await browser.storage.local.set({ urls });
   await updateBadge(urls.length);
@@ -60,9 +65,8 @@ function getLinks(bookmark, initialLinks = []) {
   let links = [...initialLinks];
 
   if (bookmark.url) {
-    links.push({ url: bookmark.url, title: bookmark.title});
-  }
-  else if (bookmark.children) {
+    links.push({ url: bookmark.url, title: bookmark.title });
+  } else if (bookmark.children) {
     bookmark.children.forEach(child => {
       links = getLinks(child, links);
     });
@@ -107,7 +111,7 @@ function getDownloadOptions(format) {
         reducer: textReducer,
         filename: 'linkdump.txt',
         type: 'text/plain'
-      }
+      };
   }
 }
 
@@ -120,7 +124,7 @@ function copy(downloadOptions) {
     browser.runtime.sendMessage({
       action: 'copy',
       payload: content
-    })
+    });
   });
 }
 
@@ -148,7 +152,9 @@ async function deleteLink(link) {
   if (!obj.urls) return;
   let { urls } = obj;
 
-  urls = urls.filter((item) => item.url !== link.url && item.title !== link.title);
+  urls = urls.filter(
+    item => item.url !== link.url && item.title !== link.title
+  );
 
   await browser.storage.local.set({ urls });
   await updateBadge(urls.length);
@@ -164,12 +170,19 @@ function handleChanged(delta) {
     return;
   }
   if (delta.state && delta.state.current === 'complete') {
-    browser.storage.local.get('options').then(async obj => {
-      if (obj.options !== undefined && obj.options.clear !== undefined && obj.options.clear.download) {
-        await browser.storage.local.remove('urls');
-        await updateBadge(0);
-      }
-    }).then(notification('notificationDownloadComplete'));
+    browser.storage.local
+      .get('options')
+      .then(async obj => {
+        if (
+          obj.options !== undefined &&
+          obj.options.clear !== undefined &&
+          obj.options.clear.download
+        ) {
+          await browser.storage.local.remove('urls');
+          await updateBadge(0);
+        }
+      })
+      .then(notification('notificationDownloadComplete'));
   }
 }
 
@@ -186,12 +199,19 @@ function handleMessage(message) {
       break;
     }
     case 'copied': {
-      browser.storage.local.get('options').then(async obj => {
-        if (obj.options !== undefined && obj.options.clear !== undefined && obj.options.clear.copy) {
-          await browser.storage.local.remove('urls');
-          await updateBadge(0);
-        }
-      }).then(notification('notificationStorageCopied'));
+      browser.storage.local
+        .get('options')
+        .then(async obj => {
+          if (
+            obj.options !== undefined &&
+            obj.options.clear !== undefined &&
+            obj.options.clear.copy
+          ) {
+            await browser.storage.local.remove('urls');
+            await updateBadge(0);
+          }
+        })
+        .then(notification('notificationStorageCopied'));
       break;
     }
     case 'delete':
@@ -201,7 +221,7 @@ function handleMessage(message) {
       clear();
       break;
     default:
-      // Do nothing on purpose
+    // Do nothing on purpose
   }
 }
 
@@ -221,21 +241,21 @@ browser.menus.onClicked.addListener(info => {
   switch (info.menuItemId) {
     case linkAddId:
       if (info.linkUrl !== undefined) {
-        addLink({ url: info.linkUrl, title: info.linkText});
+        addLink({ url: info.linkUrl, title: info.linkText });
       } else {
-        addLink({ url: info.srcUrl, title: info.srcUrl});
+        addLink({ url: info.srcUrl, title: info.srcUrl });
       }
       break;
     case bookmarkAddId:
       addBookmark(info.bookmarkId);
       break;
     default:
-      // Do nothing on purpose
+    // Do nothing on purpose
   }
 });
 
 browser.pageAction.onClicked.addListener(tab => {
-  addLink({ url: tab.url, title: tab.title});
+  addLink({ url: tab.url, title: tab.title });
 });
 
 browser.downloads.onChanged.addListener(handleChanged);
