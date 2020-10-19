@@ -7,6 +7,10 @@
     "message": "Add to dump",
     "description": "Add to dump entry in menus."
   },
+  "menuCaptureLink": {
+    "message": "Capture links",
+    "description": "Capture links to store them in the dump."
+  },
   "notificationDownloadComplete": {
     "message": "Download complete",
     "description": "Notify the user that the download is complete."
@@ -42,5 +46,9 @@
   "popupContentEmpty": {
     "message": "The dump is empty!",
     "description": "Default content when there is no link in the dump."
+  },
+  "warningLinkCapture": {
+    "message": "Stop link capture.",
+    "description": "Warning displayed when activing the link capture feature."
   }
 }

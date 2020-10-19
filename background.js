@@ -1,5 +1,6 @@
 const linkAddId = 'link-add';
 const bookmarkAddId = 'bookmark-add';
+const captureLinkId = 'capture-link';
 const textReducer = (carry, item) => `${carry + item.url}\n`;
 const markdownReducer = (carry, item) =>
   `${carry}[${item.title}](${item.url})\n`;
@@ -220,6 +221,9 @@ function handleMessage(message) {
     case 'clear':
       clear();
       break;
+    case 'addLink':
+      addLink(message.payload);
+      break;
     default:
     // Do nothing on purpose
   }
@@ -237,6 +241,12 @@ browser.menus.create({
   contexts: ['bookmark']
 });
 
+browser.menus.create({
+  id: captureLinkId,
+  title: browser.i18n.getMessage('menuCaptureLink'),
+  contexts: ['page']
+});
+
 browser.menus.onClicked.addListener(info => {
   switch (info.menuItemId) {
     case linkAddId:
@@ -248,6 +258,14 @@ browser.menus.onClicked.addListener(info => {
       break;
     case bookmarkAddId:
       addBookmark(info.bookmarkId);
+      break;
+    case captureLinkId:
+      browser.tabs.executeScript({
+        file: "/content/content.js"
+      });
+      browser.tabs.insertCSS({
+        file: "/content/content.css"
+      });
       break;
     default:
     // Do nothing on purpose
