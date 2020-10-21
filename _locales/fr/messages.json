@@ -7,6 +7,10 @@
     "message": "Entreposer",
     "description": "Add to dump entry in menus."
   },
+  "menuCaptureLink": {
+    "message": "Intercepter les liens",
+    "description": "Capture links to store them in the dump."
+  },
   "notificationDownloadComplete": {
     "message": "Téléchargement terminé",
     "description": "Notify the user that the download is complete."
@@ -42,5 +46,9 @@
   "popupContentEmpty": {
     "message": "L'entrepôt est vide !",
     "description": "Default content when there is no link in the dump."
+  },
+  "warningLinkCapture": {
+    "message": "Arrêter l'interception des liens.",
+    "description": "Warning displayed when activing the link capture feature."
   }
 }
