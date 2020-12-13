@@ -49,7 +49,7 @@ function drawHiddenContent() {
         });
       });
     }
-    document.querySelectorAll('nav ul').forEach(item => {
+    document.querySelectorAll('nav li ul').forEach(item => {
       if (item.textContent.trim() === '') {
         item.parentNode.remove();
       }
