@@ -10,6 +10,8 @@ const dokuwikiReducer = (carry, item) =>
   `${carry}[[${item.url}|${item.title}]]\n`;
 const phpbbReducer = (carry, item) =>
   `${carry}[url=${item.url}]${item.title}[/url]\n`;
+const restructuredReducer = (carry, item) =>
+  `${carry}\`${item.title} <${item.url}>\`\n`;
 let downloadId = 0;
 
 function notification(message) {
@@ -105,6 +107,12 @@ function getDownloadOptions(format) {
       return {
         reducer: phpbbReducer,
         filename: 'linkdump.bb',
+        type: 'text/plain'
+      };
+    case 'restructured':
+      return {
+        reducer: restructuredReducer,
+        filename: 'linkdump.rst',
         type: 'text/plain'
       };
     default:
