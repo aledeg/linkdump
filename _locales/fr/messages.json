@@ -11,6 +11,10 @@
     "message": "Intercepter les liens",
     "description": "Capture links to store them in the dump."
   },
+  "menuScrapeLink": {
+    "message": "Récupérer tous les liens",
+    "description": "Scrape all links and store them in the dump."
+  },
   "notificationDownloadComplete": {
     "message": "Téléchargement terminé",
     "description": "Notify the user that the download is complete."

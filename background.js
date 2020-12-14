@@ -1,6 +1,7 @@
 const linkAddId = 'link-add';
 const bookmarkAddId = 'bookmark-add';
 const captureLinkId = 'capture-link';
+const scrapeLinkId = 'scrape-link';
 const textReducer = (carry, item) => `${carry + item.url}\n`;
 const markdownReducer = (carry, item) =>
   `${carry}[${item.title}](${item.url})\n`;
@@ -255,6 +256,12 @@ browser.menus.create({
   contexts: ['page']
 });
 
+browser.menus.create({
+  id: scrapeLinkId,
+  title: browser.i18n.getMessage('menuScrapeLink'),
+  contexts: ['page']
+});
+
 browser.menus.onClicked.addListener(info => {
   switch (info.menuItemId) {
     case linkAddId:
@@ -273,6 +280,11 @@ browser.menus.onClicked.addListener(info => {
       });
       browser.tabs.insertCSS({
         file: "/content/content.css"
+      });
+      break;
+    case scrapeLinkId:
+      browser.tabs.executeScript({
+        file: "/content/scrape.js"
       });
       break;
     default:
