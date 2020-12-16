@@ -286,6 +286,9 @@ browser.menus.onClicked.addListener(info => {
       browser.tabs.executeScript({
         file: "/content/scrape.js"
       });
+      browser.tabs.insertCSS({
+        file: "/content/content.css"
+      });
       break;
     default:
     // Do nothing on purpose
