@@ -10,7 +10,7 @@ function sendMessage(event) {
     }
 }
 
-let divElement = document.createElement('div');
+var divElement = document.createElement('div');
 divElement.className = 'linkdump';
 divElement.innerText = browser.i18n.getMessage(`warningLinkCapture`);
 divElement.addEventListener('click', (event) => {
