@@ -6,64 +6,73 @@ On [addons.mozilla.org](https://addons.mozilla.org/firefox/addon/linkdump).
 
 ## What's that?
 
-Linkdump is a Firefox extension which allows you to store links, URL, and bookmarks
-in the local storage until you are ready to dump them in a file or copy them in the
-clipboard. At the moment, the following link formats are supported:
-- text
-- markdown
-- HTML
-- dokuwiki
-- phpbb.
+Linkdump is a Firefox extension which allows you to store URLs and their title in the local storage until you are ready to dump them to a file or copy them to the clipboard.
+URLs can be extracted from links, tabs, bookmarks and images.
+At the moment, the following output formats are supported:
+- text,
+- markdown,
+- HTML,
+- dokuwiki,
+- phpbb,
+- reStructured.
 
-## How do I add entries in the storage?
+## How do I store URLs?
 
-There is different ways to add entries in the storage. At the moment, only the
-following are available:
-1. URL are added by clicking the ![Linkdump icon](icons/linkdump-16.png) icon
-available in the address bar.
-1. Link are added by clicking the ![Linkdump icon](icons/linkdump-16.png) icon
-available in the link context menu.
-1. Image source are added by clicking the ![Linkdump icon](icons/linkdump-16.png)
-icon available in the image context menu.
-1. Bookmarks are added by clicking the ![Linkdump icon](icons/linkdump-16.png)
-icon available in the bookmark context menu
-1. Bookmark folders are added recursively by clicking the
-![Linkdump icon](icons/linkdump-16.png) icon available in the bookmark folder
-context menu.
+There is different ways to add entries to the storage.
+
+**Add the tab URL**  
+Click on the ![Linkdump icon](icons/linkdump-16.png) icon available in the address bar.
+
+**Add a single link**  
+Display its context menu then click the "Add to dump" action identified by the ![Linkdump icon](icons/linkdump-16.png) icon.
+
+**Add an image source**  
+See "Add a single link" above.
+
+**Add a single bookmark**  
+See "Add a single link" above.
+
+**Add all bookmarks within a bookmark folder**  
+See "Add a single link" above.
+This will retrieve recursively all bookmarks available in the selected bookmark folder.
+
+**Add all links from a page**  
+Display the page context menu then click the "Scrape links" action under the linkdump menu item. This will display a filter box used to match links before adding them to the dump.  
+If the filter is empty, all links are added.  
+If the filter is not empty, only links matching the filter are added.
+If you want to invert the filter, prepend the filter with `!`.
+
+**Add multiple links from a page**  
+Display the page context menu then click the "Capture links" action under the linkdump menu item. Now, all links are captured which means that when you click on one, it is added to the dump instead of being opened.  
 
 ## How do I retrieve the storage content?
 
-The first thing to do is to display the storage content by clicking the
-![Linkdump icon](icons/linkdump-16.png) button available in the interface.
-Doing so will display the content and the available actions.
+Display the storage content by clicking the ![Linkdump icon](icons/linkdump-16.png) button available in the interface.
+This will display also the available actions.
 
-You can now select between saving the dump content into a file or copy it to the
-clipboard. The default format is text unless you've changed it in the configuration
-page. You can also select a format prior selecting an action.
+Select between saving the dump content to a file or copy it to the clipboard then select the desired format.
 
-When the download action is finished, the storage is cleared. It's not the case
-with the copy action.
+Depending the configuration, the dump can be cleared after completion.
 
 ## How is this useful?
 
-If you want to download a bunch of videos, you can dump links in a text file and
-use that file as input for *[youtube-dl](https://rg3.github.io/youtube-dl/)*.
-```
+Everytime you need to get URLs either to perform automated actions on them or to display them with their title in a documentation or in a blog post, you can do that without the hassle to switch back and forth between your input and your output.
+
+The `text` output is particularly suited for batch downloading either videos with *[youtube-dl](https://rg3.github.io/youtube-dl/)* or files with *[wget](https://www.gnu.org/software/wget/)*.
+Here are some examples :
+```bash
+# Downloading videos with youtube-dl
 youtube-dl --batch-file linkdump.txt
 youtube-dl -a linkdump.txt
-```
 
-If you want to download a bunch of files, you can dump links in a text file and
-use that file as input for *[wget](https://www.gnu.org/software/wget/)*.
-```
+# Downloading files with wget
 wget --input-file linkdump.txt
 wget -i linkdump.txt
 ```
 
-If you want to add a list of links in your blog, you can dump links in a markdown
-or html file and use that file as a starting point for your post.
-If you want to share links on a phpBB forum, you can dump links in the appropriated
-format.
+The `markdown` output is particularly suited for blog posts, README files, github comments, etc.
+
+The `reStructured` output is particularly suited for blog posts.
 
 ## Attributions
 
