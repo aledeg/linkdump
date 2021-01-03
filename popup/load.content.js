@@ -86,17 +86,11 @@ function drawContent() {
 }
 
 function copyToClipboard(content) {
-  const textarea = document.createElement('textarea');
-  textarea.textContent = content;
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand('copy');
-  document.body.removeChild(textarea);
-  browser.runtime
-    .sendMessage({
+  navigator.clipboard.writeText(content).then(() => {
+    browser.runtime.sendMessage({
       action: 'copied'
-    })
-    .then(window.close());
+    }).then(window.close());
+  });
 }
 
 document
