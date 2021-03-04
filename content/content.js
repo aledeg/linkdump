@@ -1,13 +1,19 @@
-function sendMessage(event) {
-    const link = event.target.closest('a');
-    if (link !== null) {
-        browser.runtime.sendMessage({
-            action: 'addLink',
-            payload: { url: link.href, title: link.text.trim() }
-        });
-        event.preventDefault();
-        event.stopPropagation();
+const sendMessage = (event) => {
+    const element = event.target.closest('a') || event.target.closest('img');
+
+    if (null === element) {
+        return;
     }
+
+    const url = element.href || element.src;
+    const title = element.text.trim() || element.alt;
+
+    browser.runtime.sendMessage({
+        action: 'addLink',
+        payload: { url, title }
+    });
+    event.preventDefault();
+    event.stopPropagation();
 }
 
 var divElement = document.createElement('div');
