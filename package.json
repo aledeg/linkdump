@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 0",
     "lint": "eslint background.js popup options",
     "lint:fix": "npm run lint -- --quiet --fix",
-    "prettify": "prettier --write background.js popup/**/*.{js,css} options/**/*.{js.css}"
+    "prettify": "prettier --write ./**/*.{js,css}"
   },
   "repository": {
     "type": "git",
@@ -19,14 +19,14 @@
   },
   "homepage": "https://github.com/aledeg/linkdump#readme",
   "browserslist": [
-    "defaults"
+    "last 2 Firefox versions"
   ],
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-config-prettier": "^2.10.0",
-    "eslint-plugin-compat": "^2.7.0",
+    "eslint": "^7.21.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-compat": "^3.9.0",
     "eslint-plugin-import": "^2.22.1",
-    "prettier": "^1.19.1"
+    "prettier": "^2.2.1"
   }
 }
