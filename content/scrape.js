@@ -24,10 +24,7 @@ function getPageLinks(formData) {
             return;
         }
 
-        let title = getElementTitle(element);
-        if (title === "") {
-            return;
-        }
+        let title = getElementTitle(element) || url;
         links.push({url, title});
     });
 

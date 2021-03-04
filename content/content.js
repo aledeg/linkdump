@@ -6,7 +6,7 @@ const sendMessage = (event) => {
     }
 
     const url = element.href || element.src;
-    const title = element.text.trim() || element.alt;
+    const title = element.text.trim() || element.alt || url;
 
     browser.runtime.sendMessage({
         action: 'addLink',

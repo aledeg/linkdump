@@ -264,13 +264,12 @@ browser.menus.create({
 
 browser.menus.onClicked.addListener(info => {
   switch (info.menuItemId) {
-    case linkAddId:
-      if (info.linkUrl !== undefined) {
-        addLink({ url: info.linkUrl, title: info.linkText });
-      } else {
-        addLink({ url: info.srcUrl, title: info.srcUrl });
-      }
+    case linkAddId: {
+      const url = info.linkUrl || info.srcUrl;
+      const title = info.linkText || info.srcUrl;
+      addLink({ url, title });
       break;
+    }
     case bookmarkAddId:
       addBookmark(info.bookmarkId);
       break;
@@ -296,7 +295,7 @@ browser.menus.onClicked.addListener(info => {
 });
 
 browser.pageAction.onClicked.addListener(tab => {
-  addLink({ url: tab.url, title: tab.title });
+  addLink(tab);
 });
 
 browser.downloads.onChanged.addListener(handleChanged);
