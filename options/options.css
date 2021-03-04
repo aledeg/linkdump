@@ -24,7 +24,8 @@ tbody tr:last-child td {
 tfoot tr:first-child td {
   padding-top: 50px;
 }
-th, td {
+th,
+td {
   text-align: left;
   padding: 5px 0;
 }
@@ -49,18 +50,18 @@ th, td {
   right: 0;
   bottom: 0;
   background-color: var(--inactive-color);
-  transition: .4s;
+  transition: 0.4s;
   border-radius: var(--switch-height);
 }
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: var(--slider-size);
   width: var(--slider-size);
   left: var(--slider-spacing);
   bottom: var(--slider-spacing);
   background-color: var(--slider-color);
-  transition: .4s;
+  transition: 0.4s;
   border-radius: 50%;
 }
 input:checked + .slider {

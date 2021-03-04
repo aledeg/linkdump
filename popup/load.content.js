@@ -5,7 +5,7 @@ function deleteItem({ target }) {
 
   browser.runtime.sendMessage({
     action: 'delete',
-    payload: { url: href, title: text }
+    payload: { url: href, title: text },
   });
 
   container.remove();
@@ -20,7 +20,7 @@ function translateContent() {
     '#popup-content'
   ).dataset.empty = browser.i18n.getMessage('popupContentEmpty');
   // Translate actions
-  document.querySelectorAll('[data-action]').forEach(item => {
+  document.querySelectorAll('[data-action]').forEach((item) => {
     const action =
       item.dataset.action[0].toUpperCase() + item.dataset.action.slice(1);
     // eslint-disable-next-line no-param-reassign
@@ -29,10 +29,10 @@ function translateContent() {
 }
 
 function drawHiddenContent() {
-  document.querySelectorAll('.hidden').forEach(item => {
+  document.querySelectorAll('.hidden').forEach((item) => {
     item.classList.remove('hidden');
   });
-  browser.storage.local.get('options').then(obj => {
+  browser.storage.local.get('options').then((obj) => {
     if (obj.options !== undefined) {
       Object.entries(obj.options).forEach(([action, formats]) => {
         if (action !== 'download' && action !== 'copy') {
@@ -49,7 +49,7 @@ function drawHiddenContent() {
         });
       });
     }
-    document.querySelectorAll('nav li ul').forEach(item => {
+    document.querySelectorAll('nav li ul').forEach((item) => {
       if (item.textContent.trim() === '') {
         item.parentNode.remove();
       }
@@ -58,7 +58,7 @@ function drawHiddenContent() {
 }
 
 function drawContentLinks(obj) {
-  obj.urls.forEach(item => {
+  obj.urls.forEach((item) => {
     const listItem = document.createElement('p');
     const itemLink = document.createElement('a');
     itemLink.href = item.url;
@@ -76,7 +76,7 @@ function drawContentLinks(obj) {
 }
 
 function drawContent() {
-  browser.storage.local.get('urls').then(obj => {
+  browser.storage.local.get('urls').then((obj) => {
     translateContent();
     if (obj.urls !== undefined && obj.urls.length !== 0) {
       drawHiddenContent();
@@ -87,9 +87,11 @@ function drawContent() {
 
 function copyToClipboard(content) {
   navigator.clipboard.writeText(content).then(() => {
-    browser.runtime.sendMessage({
-      action: 'copied'
-    }).then(window.close());
+    browser.runtime
+      .sendMessage({
+        action: 'copied',
+      })
+      .then(window.close());
   });
 }
 
@@ -98,16 +100,16 @@ document
   .addEventListener('click', () => {
     browser.runtime
       .sendMessage({
-        action: 'clear'
+        action: 'clear',
       })
       .then(window.close());
   });
 
-document.querySelectorAll('[data-format]').forEach(item => {
+document.querySelectorAll('[data-format]').forEach((item) => {
   item.addEventListener('click', ({ target }) => {
     browser.runtime.sendMessage({
       action: target.dataset.action,
-      payload: target.dataset.format
+      payload: target.dataset.format,
     });
   });
 });

@@ -20,7 +20,7 @@ function notification(message) {
     type: 'basic',
     iconUrl: browser.extension.getURL('icons/linkdump-48.png'),
     title: 'Linkdump',
-    message: browser.i18n.getMessage(message)
+    message: browser.i18n.getMessage(message),
   });
 }
 
@@ -47,7 +47,7 @@ async function addLink(link) {
 
   urls = urls.flat();
 
-  await browser.storage.local.get('options').then(obj => {
+  await browser.storage.local.get('options').then((obj) => {
     if (obj.options === undefined || obj.options.other === undefined) {
       return;
     }
@@ -56,7 +56,8 @@ async function addLink(link) {
     }
     if (obj.options.other.unique) {
       urls = urls.filter(
-        (item, index, self) => self.findIndex(t => t.url === item.url) === index
+        (item, index, self) =>
+          self.findIndex((t) => t.url === item.url) === index
       );
     }
   });
@@ -71,7 +72,7 @@ function getLinks(bookmark, initialLinks = []) {
   if (bookmark.url) {
     links.push({ url: bookmark.url, title: bookmark.title });
   } else if (bookmark.children) {
-    bookmark.children.forEach(child => {
+    bookmark.children.forEach((child) => {
       links = getLinks(child, links);
     });
   }
@@ -90,56 +91,56 @@ function getDownloadOptions(format) {
       return {
         reducer: markdownReducer,
         filename: 'linkdump.md',
-        type: 'text/markdown'
+        type: 'text/markdown',
       };
     case 'html':
       return {
         reducer: htmlReducer,
         filename: 'linkdump.html',
-        type: 'text/html'
+        type: 'text/html',
       };
     case 'dokuwiki':
       return {
         reducer: dokuwikiReducer,
         filename: 'linkdump.dk',
-        type: 'text/plain'
+        type: 'text/plain',
       };
     case 'phpbb':
       return {
         reducer: phpbbReducer,
         filename: 'linkdump.bb',
-        type: 'text/plain'
+        type: 'text/plain',
       };
     case 'restructured':
       return {
         reducer: restructuredReducer,
         filename: 'linkdump.rst',
-        type: 'text/plain'
+        type: 'text/plain',
       };
     default:
       return {
         reducer: textReducer,
         filename: 'linkdump.txt',
-        type: 'text/plain'
+        type: 'text/plain',
       };
   }
 }
 
 function copy(downloadOptions) {
-  browser.storage.local.get('urls').then(obj => {
+  browser.storage.local.get('urls').then((obj) => {
     if (!obj.urls) return;
 
     const content = obj.urls.reduce(downloadOptions.reducer, '');
 
     browser.runtime.sendMessage({
       action: 'copy',
-      payload: content
+      payload: content,
     });
   });
 }
 
 function download(downloadOptions) {
-  browser.storage.local.get('urls').then(obj => {
+  browser.storage.local.get('urls').then((obj) => {
     if (!obj.urls) return;
 
     const content = obj.urls.reduce(downloadOptions.reducer, '');
@@ -149,9 +150,9 @@ function download(downloadOptions) {
       .download({
         url: URL.createObjectURL(blob),
         filename: downloadOptions.filename,
-        saveAs: true
+        saveAs: true,
       })
-      .then(id => {
+      .then((id) => {
         downloadId = id;
       });
   });
@@ -163,7 +164,7 @@ async function deleteLink(link) {
   let { urls } = obj;
 
   urls = urls.filter(
-    item => item.url !== link.url && item.title !== link.title
+    (item) => item.url !== link.url && item.title !== link.title
   );
 
   await browser.storage.local.set({ urls });
@@ -182,7 +183,7 @@ function handleChanged(delta) {
   if (delta.state && delta.state.current === 'complete') {
     browser.storage.local
       .get('options')
-      .then(async obj => {
+      .then(async (obj) => {
         if (
           obj.options !== undefined &&
           obj.options.clear !== undefined &&
@@ -211,7 +212,7 @@ function handleMessage(message) {
     case 'copied': {
       browser.storage.local
         .get('options')
-        .then(async obj => {
+        .then(async (obj) => {
           if (
             obj.options !== undefined &&
             obj.options.clear !== undefined &&
@@ -241,28 +242,28 @@ function handleMessage(message) {
 browser.menus.create({
   id: linkAddId,
   title: browser.i18n.getMessage('menuAddToDump'),
-  contexts: ['link', 'image']
+  contexts: ['link', 'image'],
 });
 
 browser.menus.create({
   id: bookmarkAddId,
   title: browser.i18n.getMessage('menuAddToDump'),
-  contexts: ['bookmark']
+  contexts: ['bookmark'],
 });
 
 browser.menus.create({
   id: captureLinkId,
   title: browser.i18n.getMessage('menuCaptureLink'),
-  contexts: ['page']
+  contexts: ['page'],
 });
 
 browser.menus.create({
   id: scrapeLinkId,
   title: browser.i18n.getMessage('menuScrapeLink'),
-  contexts: ['page']
+  contexts: ['page'],
 });
 
-browser.menus.onClicked.addListener(info => {
+browser.menus.onClicked.addListener((info) => {
   switch (info.menuItemId) {
     case linkAddId: {
       const url = info.linkUrl || info.srcUrl;
@@ -275,18 +276,18 @@ browser.menus.onClicked.addListener(info => {
       break;
     case captureLinkId:
       browser.tabs.executeScript({
-        file: "/content/content.js"
+        file: '/content/content.js',
       });
       browser.tabs.insertCSS({
-        file: "/content/content.css"
+        file: '/content/content.css',
       });
       break;
     case scrapeLinkId:
       browser.tabs.executeScript({
-        file: "/content/scrape.js"
+        file: '/content/scrape.js',
       });
       browser.tabs.insertCSS({
-        file: "/content/content.css"
+        file: '/content/content.css',
       });
       break;
     default:
@@ -294,7 +295,7 @@ browser.menus.onClicked.addListener(info => {
   }
 });
 
-browser.pageAction.onClicked.addListener(tab => {
+browser.pageAction.onClicked.addListener((tab) => {
   addLink(tab);
 });
 
