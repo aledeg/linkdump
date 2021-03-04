@@ -1,4 +1,4 @@
-async function saveOption(action, format, checked) {
+const saveOption = async (action, format, checked) => {
   const obj = await browser.storage.local.get('options');
   const options = obj.options || {};
 

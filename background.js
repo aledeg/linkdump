@@ -15,16 +15,14 @@ const restructuredReducer = (carry, item) =>
   `${carry}\`${item.title} <${item.url}>\`\n`;
 let downloadId = 0;
 
-function notification(message) {
-  return browser.notifications.create('download-notification', {
+const notification = (message) => browser.notifications.create('download-notification', {
     type: 'basic',
     iconUrl: browser.extension.getURL('icons/linkdump-48.png'),
     title: 'Linkdump',
     message: browser.i18n.getMessage(message),
-  });
-}
+  })
 
-async function updateBadge(items) {
+const updateBadge = async (items) => {
   let count = items;
 
   if (items === undefined) {
@@ -40,7 +38,7 @@ async function updateBadge(items) {
   browser.browserAction.setBadgeBackgroundColor({ color: '#007bc5' });
 }
 
-async function addLink(link) {
+const addLink = async (link) => {
   const storage = await browser.storage.local.get('urls');
   let urls = storage.urls || [];
   urls.push(link);
@@ -66,7 +64,7 @@ async function addLink(link) {
   await updateBadge(urls.length);
 }
 
-function getLinks(bookmark, initialLinks = []) {
+const getLinks = (bookmark, initialLinks = []) => {
   let links = [...initialLinks];
 
   if (bookmark.url) {
@@ -80,12 +78,12 @@ function getLinks(bookmark, initialLinks = []) {
   return links;
 }
 
-async function addBookmark(id) {
+const addBookmark = async (id) => {
   const [root] = await browser.bookmarks.getSubTree(id);
   await addLink(getLinks(root));
 }
 
-function getDownloadOptions(format) {
+const getDownloadOptions = (format) => {
   switch (format) {
     case 'markdown':
       return {
@@ -126,7 +124,7 @@ function getDownloadOptions(format) {
   }
 }
 
-function copy(downloadOptions) {
+const copy = (downloadOptions) => {
   browser.storage.local.get('urls').then((obj) => {
     if (!obj.urls) return;
 
@@ -139,7 +137,7 @@ function copy(downloadOptions) {
   });
 }
 
-function download(downloadOptions) {
+const download = (downloadOptions) => {
   browser.storage.local.get('urls').then((obj) => {
     if (!obj.urls) return;
 
@@ -158,7 +156,7 @@ function download(downloadOptions) {
   });
 }
 
-async function deleteLink(link) {
+const deleteLink = async (link) =>{
   const obj = await browser.storage.local.get('urls');
   if (!obj.urls) return;
   let { urls } = obj;
@@ -171,12 +169,12 @@ async function deleteLink(link) {
   await updateBadge(urls.length);
 }
 
-async function clear() {
+const clear = async () => {
   await browser.storage.local.remove('urls');
   await updateBadge(0);
 }
 
-function handleChanged(delta) {
+const handleChanged = (delta) => {
   if (delta.id !== downloadId) {
     return;
   }
@@ -197,7 +195,7 @@ function handleChanged(delta) {
   }
 }
 
-function handleMessage(message) {
+const handleMessage = (message) => {
   switch (message.action) {
     case 'download': {
       const options = getDownloadOptions(message.payload);

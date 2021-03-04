@@ -1,11 +1,11 @@
-function filterUrl(url, filter) {
+const filterUrl = (url, filter) => {
   if (filter.indexOf('!') === 0) {
     return url.indexOf(filter.substring(1)) > -1;
   }
   return url.indexOf(filter) === -1;
 }
 
-function getElementTitle(element) {
+const getElementTitle = (element) => {
   let title = element.title.trim();
   if (title !== '') {
     return title;
@@ -14,7 +14,7 @@ function getElementTitle(element) {
   return element.text.trim();
 }
 
-function getPageLinks(formData) {
+const getPageLinks = (formData) => {
   const elements = document.querySelectorAll('a');
   const filter = formData.get('filter');
   let links = [];
@@ -31,7 +31,7 @@ function getPageLinks(formData) {
   return links;
 }
 
-function sendMessage(formData) {
+const sendMessage = (formData) => {
   browser.runtime.sendMessage({
     action: 'addLink',
     payload: getPageLinks(formData),

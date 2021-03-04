@@ -1,4 +1,4 @@
-function deleteItem({ target }) {
+const deleteItem = ({ target }) => {
   const { href, text } = target.nextSibling;
   const container = target.parentNode;
   const root = container.parentNode;
@@ -14,7 +14,7 @@ function deleteItem({ target }) {
   }
 }
 
-function translateContent() {
+const translateContent = () => {
   // Translate empty content
   document.querySelector(
     '#popup-content'
@@ -28,7 +28,7 @@ function translateContent() {
   });
 }
 
-function drawHiddenContent() {
+const drawHiddenContent = () => {
   document.querySelectorAll('.hidden').forEach((item) => {
     item.classList.remove('hidden');
   });
@@ -57,7 +57,7 @@ function drawHiddenContent() {
   });
 }
 
-function drawContentLinks(obj) {
+const drawContentLinks = (obj) => {
   obj.urls.forEach((item) => {
     const listItem = document.createElement('p');
     const itemLink = document.createElement('a');
@@ -75,7 +75,7 @@ function drawContentLinks(obj) {
   });
 }
 
-function drawContent() {
+const drawContent = () => {
   browser.storage.local.get('urls').then((obj) => {
     translateContent();
     if (obj.urls !== undefined && obj.urls.length !== 0) {
@@ -85,7 +85,7 @@ function drawContent() {
   });
 }
 
-function copyToClipboard(content) {
+const copyToClipboard = (content) => {
   navigator.clipboard.writeText(content).then(() => {
     browser.runtime
       .sendMessage({
@@ -114,7 +114,7 @@ document.querySelectorAll('[data-format]').forEach((item) => {
   });
 });
 
-function handleMessage(message) {
+const handleMessage = (message) => {
   switch (message.action) {
     case 'reload':
       drawContent();
