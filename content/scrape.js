@@ -6,7 +6,7 @@ const filterUrl = (url, filter) => {
 }
 
 const getElementTitle = (element) => {
-  let title = element.title.trim();
+  const title = element.title.trim();
   if (title !== '') {
     return title;
   }
@@ -17,14 +17,14 @@ const getElementTitle = (element) => {
 const getPageLinks = (formData) => {
   const elements = document.querySelectorAll('a');
   const filter = formData.get('filter');
-  let links = [];
+  const links = [];
   elements.forEach((element) => {
-    let url = element.href;
+    const url = element.href;
     if (filterUrl(url, filter)) {
       return;
     }
 
-    let title = getElementTitle(element) || url;
+    const title = getElementTitle(element) || url;
     links.push({ url, title });
   });
 
@@ -38,18 +38,18 @@ const sendMessage = (formData) => {
   });
 }
 
-var divElement = document.createElement('div');
+const divElement = document.createElement('div');
 divElement.className = 'linkdump';
 document.body.appendChild(divElement);
 
-var formElement = document.createElement('form');
+const formElement = document.createElement('form');
 formElement.addEventListener('submit', (event) => {
   sendMessage(new FormData(event.target));
   formElement.parentNode.remove();
 });
 divElement.appendChild(formElement);
 
-var filterElement = document.createElement('input');
+const filterElement = document.createElement('input');
 filterElement.type = 'text';
 filterElement.name = 'filter';
 formElement.appendChild(filterElement);

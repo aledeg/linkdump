@@ -1,7 +1,7 @@
 const sendMessage = (event) => {
   const element = event.target.closest('a') || event.target.closest('img');
 
-  if (null === element) {
+  if (element === null) {
     return;
   }
 
@@ -16,10 +16,10 @@ const sendMessage = (event) => {
   event.stopPropagation();
 };
 
-var divElement = document.createElement('div');
+const divElement = document.createElement('div');
 divElement.className = 'linkdump';
 divElement.innerText = browser.i18n.getMessage(`warningLinkCapture`);
-divElement.addEventListener('click', (event) => {
+divElement.addEventListener('click', () => {
   document.documentElement.removeEventListener('click', sendMessage, true);
   divElement.remove();
 });

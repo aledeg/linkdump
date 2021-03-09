@@ -5,7 +5,7 @@
   "main": "background.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 0",
-    "lint": "eslint background.js popup options",
+    "lint": "eslint background.js popup options content",
     "lint:fix": "npm run lint -- --quiet --fix",
     "prettify": "prettier --write ./**/*.{js,css}"
   },
