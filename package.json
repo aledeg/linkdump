@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 0",
     "lint": "eslint background.js popup options content",
     "lint:fix": "npm run lint -- --quiet --fix",
-    "prettify": "prettier --write ./**/*.{js,css}"
+    "prettify": "prettier --write ./**/*.{js,css}",
+    "build": "zip --recurse-paths --filesync ../linkdump-$npm_package_version.zip * --exclude 'node_modules/**' --exclude 'icons/00**'"
   },
   "repository": {
     "type": "git",
