@@ -29,25 +29,25 @@ const getPageLinks = (formData) => {
   });
 
   return links;
-}
+};
 
-const sendMessage = (formData) => {
+const sendScrapedMessages = (formData) => {
   browser.runtime.sendMessage({
     action: 'addLink',
     payload: getPageLinks(formData),
   });
-}
+};
 
-const divElement = document.createElement('div');
-divElement.className = 'linkdump';
-document.body.appendChild(divElement);
+const divScrapeElement = document.createElement('div');
+divScrapeElement.className = 'linkdump';
+document.body.appendChild(divScrapeElement);
 
 const formElement = document.createElement('form');
 formElement.addEventListener('submit', (event) => {
-  sendMessage(new FormData(event.target));
+  sendScrapedMessages(new FormData(event.target));
   formElement.parentNode.remove();
 });
-divElement.appendChild(formElement);
+divScrapeElement.appendChild(formElement);
 
 const filterElement = document.createElement('input');
 filterElement.type = 'text';
