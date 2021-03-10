@@ -3,7 +3,7 @@ const filterUrl = (url, filter) => {
     return url.indexOf(filter.substring(1)) > -1;
   }
   return url.indexOf(filter) === -1;
-}
+};
 
 const getElementTitle = (element) => {
   const title = element.title.trim();
@@ -12,7 +12,7 @@ const getElementTitle = (element) => {
   }
 
   return element.text.trim();
-}
+};
 
 const getPageLinks = (formData) => {
   const elements = document.querySelectorAll('a');

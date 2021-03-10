@@ -8,7 +8,7 @@ const saveOption = async (action, format, checked) => {
   options[action][format] = checked;
 
   await browser.storage.local.set({ options });
-}
+};
 
 document.querySelectorAll('input').forEach((item) => {
   item.addEventListener('change', ({ target }) => {

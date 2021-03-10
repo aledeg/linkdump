@@ -12,7 +12,7 @@ const deleteItem = ({ target }) => {
   if (root.childNodes.length === 0) {
     window.close();
   }
-}
+};
 
 const translateContent = () => {
   // Translate empty content
@@ -26,7 +26,7 @@ const translateContent = () => {
     // eslint-disable-next-line no-param-reassign
     item.title = browser.i18n.getMessage(`popupButtonAction${action}`);
   });
-}
+};
 
 const drawHiddenContent = () => {
   document.querySelectorAll('.hidden').forEach((item) => {
@@ -55,7 +55,7 @@ const drawHiddenContent = () => {
       }
     });
   });
-}
+};
 
 const drawContentLinks = (obj) => {
   obj.urls.forEach((item) => {
@@ -73,7 +73,7 @@ const drawContentLinks = (obj) => {
 
     document.querySelector('#popup-content').appendChild(listItem);
   });
-}
+};
 
 const drawContent = () => {
   browser.storage.local.get('urls').then((obj) => {
@@ -83,7 +83,7 @@ const drawContent = () => {
       drawContentLinks(obj);
     }
   });
-}
+};
 
 const copyToClipboard = (content) => {
   navigator.clipboard.writeText(content).then(() => {
@@ -93,7 +93,7 @@ const copyToClipboard = (content) => {
       })
       .then(window.close());
   });
-}
+};
 
 document
   .querySelector('[data-action="clear"]')
@@ -125,7 +125,7 @@ const handleMessage = (message) => {
     default:
     // Do nothing on purpose
   }
-}
+};
 
 browser.runtime.onMessage.addListener(handleMessage);
 drawContent();
