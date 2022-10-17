@@ -64,7 +64,7 @@ const drawContentLinks = (obj) => {
     itemLink.href = item.url;
     itemLink.textContent = item.title;
     const deleteImage = document.createElement('img');
-    deleteImage.src = browser.extension.getURL('icons/trash-48.png');
+    deleteImage.src = browser.runtime.getURL('icons/trash-48.png');
     deleteImage.onclick = deleteItem;
     deleteImage.classList = 'delete';
 

@@ -17,7 +17,7 @@ let downloadId = 0;
 
 const notification = (message) => browser.notifications.create('download-notification', {
     type: 'basic',
-    iconUrl: browser.extension.getURL('icons/linkdump-48.png'),
+    iconUrl: browser.runtime.getURL('icons/linkdump-48.png'),
     title: 'Linkdump',
     message: browser.i18n.getMessage(message),
   })
